@@ -1,6 +1,6 @@
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
-import 'package:cleaning_duty_project/feature/screen/login.dart';
-import 'package:cleaning_duty_project/feature/screen/register.dart';
+import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
+import 'package:cleaning_duty_project/feature/screen/authenticate/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
