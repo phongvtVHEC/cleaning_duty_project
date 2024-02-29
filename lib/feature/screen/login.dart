@@ -4,6 +4,7 @@ import 'package:cleaning_duty_project/feature/widget/common_button.dart';
 import 'package:cleaning_duty_project/feature/widget/common_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,59 +19,59 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 200),
+              padding: EdgeInsets.only(top: 200.h),
               child: Center(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'LOGIN',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColor.colorBlack,
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 10.h,
                     ),
-                    const Text(
+                    Text(
                       'Input the right details to login the right way.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xFF737C96),
-                        fontSize: 14,
+                        color: const Color(0xFF737C96),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     CommonTextField(
                         label: 'Username', inputController: usernameController),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     CommonTextField(
                         label: 'Password', inputController: passwordController),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     CommonButton(
                       buttonText: 'Login',
                       onPressedFunction: () {},
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     Text.rich(
                       TextSpan(
                         children: [
-                          const TextSpan(
+                          TextSpan(
                             text: 'Dont have an account? ',
                             style: TextStyle(
                               color: AppColor.colorFontBlack,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -80,9 +81,9 @@ class LoginScreen extends StatelessWidget {
                                 context.push(ScreenRoute.registerScreen);
                               },
                             text: 'Register',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppColor.colorBlack,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),

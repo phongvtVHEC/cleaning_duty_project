@@ -2,6 +2,7 @@ import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +17,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: ThemeData(
-        fontFamily: Constants.app_font_DM_Sans,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.blueAccent),
-      ),
-      routerConfig: router,
+    return ScreenUtilInit(
+      builder: (_, child) {
+        return MaterialApp.router(
+          theme: ThemeData(
+            fontFamily: Constants.app_font_DM_Sans,
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.blueAccent),
+          ),
+          routerConfig: router,
+        );
+      },
     );
   }
 }
