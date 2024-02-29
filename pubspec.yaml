@@ -12,6 +12,8 @@ dependencies:
   flutter_native_splash: ^2.3.7
   go_router: ^13.2.0
   fluttertoast: ^8.2.4
+  dio: ^5.4.1
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
