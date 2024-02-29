@@ -1,4 +1,4 @@
-import 'package:cleaning_duty_project/login.dart';
+import 'package:cleaning_duty_project/feature/routers/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -15,13 +15,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: LoginScreen(),
-        ),
+    return MaterialApp.router(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.blueAccent),
       ),
+      routerConfig: router,
     );
   }
 }
