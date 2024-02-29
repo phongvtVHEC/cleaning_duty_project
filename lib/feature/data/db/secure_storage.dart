@@ -5,35 +5,31 @@ class SecureStorage {
   /// Define secure storage
   final secureStorage = const FlutterSecureStorage();
 
-  /// Define key
-  final String accessToken = Constants.access_token;
-  final String refreshToken = Constants.refresh_token;
-  final String id = Constants.id;
-
-  Future<void> saveToken(dynamic value) async {
-    return await secureStorage.write(key: accessToken, value: value);
+  Future<void> saveAccessToken(dynamic value) async {
+    return await secureStorage.write(key: Constants.access_token, value: value);
   }
 
-  Future<String?> getToken() {
-    return secureStorage.read(key: accessToken);
+  Future<void> saveRefreshToken(dynamic value) async {
+    return await secureStorage.write(
+        key: Constants.refresh_token, value: value);
+  }
+
+  Future<String?> getRefreshToken() {
+    return secureStorage.read(key: Constants.refresh_token);
   }
 
   Future<bool> hasToken() async {
-    bool hasToken = await secureStorage.containsKey(key: accessToken);
+    bool hasToken =
+        await secureStorage.containsKey(key: Constants.access_token);
     return hasToken;
   }
 
   Future<void> saveUserId(dynamic value) async {
-    return await secureStorage.write(key: id, value: value);
+    return await secureStorage.write(key: Constants.id, value: value);
   }
 
   Future<String?> getUserId() {
-    return secureStorage.read(key: id);
-  }
-
-  Future<void> saveAll(dynamic token, dynamic id) async {
-    await saveToken(token);
-    await saveUserId(id);
+    return secureStorage.read(key: Constants.id);
   }
 
   void removeAll() async {
