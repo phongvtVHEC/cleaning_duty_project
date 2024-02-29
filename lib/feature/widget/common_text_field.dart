@@ -25,7 +25,6 @@ class CommonTextField extends StatelessWidget {
                   labelStyle: const TextStyle(
                     color: Color(0xFF337EEE),
                     fontSize: 14,
-                    fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w500,
                   ),
                   enabledBorder: OutlineInputBorder(

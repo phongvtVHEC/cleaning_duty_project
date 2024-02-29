@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,6 +18,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
+        fontFamily: Constants.app_font_DM_Sans,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(backgroundColor: Colors.blueAccent),
       ),

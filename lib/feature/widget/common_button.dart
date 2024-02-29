@@ -28,7 +28,6 @@ class CommonButton extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
-                  fontFamily: 'DM Sans',
                   fontWeight: FontWeight.w700,
                 ),
               ),

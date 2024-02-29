@@ -28,7 +28,6 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(
                         color: AppColor.colorBlack,
                         fontSize: 18,
-                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -41,7 +40,6 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(
                         color: Color(0xFF737C96),
                         fontSize: 14,
-                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -73,7 +71,6 @@ class LoginScreen extends StatelessWidget {
                             style: TextStyle(
                               color: AppColor.colorFontBlack,
                               fontSize: 14,
-                              fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -86,7 +83,6 @@ class LoginScreen extends StatelessWidget {
                             style: const TextStyle(
                               color: AppColor.colorBlack,
                               fontSize: 14,
-                              fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
