@@ -6,6 +6,7 @@ class CommonTextField extends StatelessWidget {
   final String label;
   final TextEditingController? inputController;
   final bool? isDisable;
+  final bool? isPassword;
   final Color? textFieldColor;
   const CommonTextField({
     Key? key,
@@ -13,6 +14,7 @@ class CommonTextField extends StatelessWidget {
     this.inputController,
     this.isDisable,
     this.textFieldColor,
+    this.isPassword,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class CommonTextField extends StatelessWidget {
               IgnorePointer(
                 ignoring: isDisable ?? false,
                 child: TextField(
+                  obscureText: isPassword ?? false,
                   enableInteractiveSelection: isDisable == true ? false : true,
                   readOnly: isDisable ?? false,
                   controller: inputController,

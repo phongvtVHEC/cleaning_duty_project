@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     usernameController, passwordController, isDisable),
                 LoginFailure() => _buildInitialLoginWidget(
                     usernameController, passwordController, isDisable),
-                LoginSuccess() => const Text('Login Success'),
+                LoginSuccess() => const SizedBox(),
               });
               return Column(
                 children: [
@@ -155,6 +155,7 @@ Widget _buildInitialLoginWidget(TextEditingController usernameController,
           isDisable: isDisable),
       SizedBox(height: 20.h),
       CommonTextField(
+          isPassword: true,
           label: 'Password',
           inputController: passwordController,
           isDisable: isDisable),
