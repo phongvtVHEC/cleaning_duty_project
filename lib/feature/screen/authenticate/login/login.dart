@@ -37,115 +37,117 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, state) {
-            final initialLoginWidget = Column(
-              children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-                CommonTextField(
-                    label: 'Username', inputController: usernameController),
-                SizedBox(
-                  height: 20.h,
-                ),
-                CommonTextField(
-                    label: 'Password', inputController: passwordController),
-                SizedBox(
-                  height: 20.h,
-                ),
-              ],
-            );
+        child: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccess) {
+              ToastUtil.showSuccessMessage("Login Successfully");
+              context.go(ScreenRoute.homeScreen);
+            }
+            if (state is LoginFailure) {
+              ToastUtil.showErrorMessage("Login Failed");
+            }
+          },
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              final child = (switch (state) {
+                LoginInitial() => _buildInitialLoginWidget(
+                    usernameController, passwordController),
+                LoginProgress() => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                LoginFailure() => _buildInitialLoginWidget(
+                    usernameController, passwordController),
+                LoginSuccess() => const Text('Login Success'),
+              });
 
-            final child = () {
-              if (state is LoginInitial) {
-                return initialLoginWidget;
-              } else if (state is LoginProgress) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is LoginSuccess) {
-                ToastUtil.showSuccessMessage("Login Successfully");
-                return SizedBox(); // Placeholder widget after showing toast
-              } else if (state is LoginFailure) {
-                ToastUtil.showErrorMessage("Login Error");
-                return SizedBox(); // Placeholder widget after showing toast
-              } else {
-                return SizedBox(); // Default case to handle any other states
-              }
-            }();
-            return Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 200.h),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'LOGIN',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColor.colorBlack,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 200.h),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            'LOGIN',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColor.colorBlack,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          'Input the right details to login the right way.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: const Color(0xFF737C96),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 10.h,
                           ),
-                        ),
-                        child,
-                        CommonButton(
-                          buttonText: 'Login',
-                          onPressedFunction: () {
-                            _handleLogin(context);
-                          },
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Dont have an account? ',
-                                style: TextStyle(
-                                  color: AppColor.colorFontBlack,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                          Text(
+                            'Input the right details to login the right way.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: const Color(0xFF737C96),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          child,
+                          CommonButton(
+                            buttonText: 'Login',
+                            onPressedFunction: () {
+                              _handleLogin(context);
+                            },
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Dont have an account? ',
+                                  style: TextStyle(
+                                    color: AppColor.colorFontBlack,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    context.push(ScreenRoute.registerScreen);
-                                  },
-                                text: 'Register',
-                                style: TextStyle(
-                                  color: AppColor.colorBlack,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      context.push(ScreenRoute.registerScreen);
+                                    },
+                                  text: 'Register',
+                                  style: TextStyle(
+                                    color: AppColor.colorBlack,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
+}
+
+Widget _buildInitialLoginWidget(TextEditingController usernameController,
+    TextEditingController passwordController) {
+  return Column(
+    children: [
+      SizedBox(height: 30.h),
+      CommonTextField(label: 'Username', inputController: usernameController),
+      SizedBox(height: 20.h),
+      CommonTextField(label: 'Password', inputController: passwordController),
+      SizedBox(height: 20.h),
+    ],
+  );
 }

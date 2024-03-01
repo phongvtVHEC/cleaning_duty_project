@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/core/errors/exceptions.dart';
 import 'package:cleaning_duty_project/feature/data/entities/request/authentication/login/login_request.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _onLoginStarted(LoginStarted event, Emitter<LoginState> emit) async {
     emit(LoginProgress());
-    final response = await authenticationRepository.login(event.loginRequest);
-    if (response.accessToken != null) {
-      emit(LoginSuccess());
-    } else {
+    try {
+      final response = await authenticationRepository.login(event.loginRequest);
+      if (response.accessToken != null) {
+        emit(LoginSuccess());
+      }
+    } on ServerException {
       emit(LoginFailure());
     }
   }
