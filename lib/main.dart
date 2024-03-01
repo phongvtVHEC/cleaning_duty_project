@@ -2,7 +2,7 @@ import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/core/networks/network_client.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
-import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate.dart';
+import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
 import 'package:dio/dio.dart';
