@@ -51,9 +51,7 @@ class CommonTextField extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     filled: true,
-                    fillColor: isDisable == true
-                        ? AppColor.colorTextFieldDisable
-                        : textFieldColor ?? AppColor.colorWhite,
+                    fillColor: AppColor.colorWhite,
                   ),
                 ),
               ),

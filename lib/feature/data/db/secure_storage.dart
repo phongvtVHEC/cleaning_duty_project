@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class SecureStorage {
   Future<void> saveAccessToken(dynamic value);
+  Future<String?> getAccessToken();
   Future<void> saveRefreshToken(dynamic value);
   Future<String?> getRefreshToken();
   Future<bool> hasToken();
@@ -19,6 +20,11 @@ class SecureStorageImpl implements SecureStorage {
   @override
   Future<void> saveAccessToken(dynamic value) async {
     return await secureStorage.write(key: Constants.access_token, value: value);
+  }
+
+  @override
+  Future<String?> getAccessToken() {
+    return secureStorage.read(key: Constants.access_token);
   }
 
   @override

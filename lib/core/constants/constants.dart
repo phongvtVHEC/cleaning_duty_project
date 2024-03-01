@@ -5,7 +5,7 @@ class Constants {
   static const String app_font_DM_Sans = 'DM Sans';
 
   // App API Endpoints
-  static const String api_base_url = 'http://localhost:3111';
+  static const String api_base_url = 'http://192.168.1.11:3111';
   // Authentication API
   static const String api_login = '$api_base_url/api/auth/login';
   static const String api_register = '$api_base_url/api/auth/register';

@@ -36,108 +36,111 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loginState = context.watch<LoginBloc>().state;
+
+    var loginWidget = (switch (loginState) {
+      LoginInitial() => _buildInitialLoginWidget(
+          usernameController, passwordController, isDisable),
+      LoginProgress() => _buildInitialLoginWidget(
+          usernameController, passwordController, isDisable),
+      LoginFailure() => _buildInitialLoginWidget(
+          usernameController, passwordController, isDisable),
+      LoginSuccess() => const SizedBox(),
+      _ => const SizedBox(),
+    });
+
+    loginWidget = BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state is LoginProgress) {
+          isDisable = true;
+        }
+        if (state is LoginSuccess) {
+          isDisable = false;
+          ToastUtil.showSuccessMessage("Login Successfully");
+          context.read<LoginBloc>().add(HandleToken());
+          context.go(ScreenRoute.homeScreen);
+        }
+        if (state is LoginFailure) {
+          isDisable = false;
+          ToastUtil.showErrorMessage("Login Failed");
+        }
+      },
+      child: loginWidget,
+    );
+
     return Scaffold(
       body: SingleChildScrollView(
-        child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {
-            if (state is LoginProgress) {
-              isDisable = true;
-            }
-            if (state is LoginSuccess) {
-              isDisable = false;
-              ToastUtil.showSuccessMessage("Login Successfully");
-              context.go(ScreenRoute.homeScreen);
-            }
-            if (state is LoginFailure) {
-              isDisable = false;
-              ToastUtil.showErrorMessage("Login Failed");
-            }
-          },
-          child: BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              final child = (switch (state) {
-                LoginInitial() => _buildInitialLoginWidget(
-                    usernameController, passwordController, isDisable),
-                LoginProgress() => _buildInitialLoginWidget(
-                    usernameController, passwordController, isDisable),
-                LoginFailure() => _buildInitialLoginWidget(
-                    usernameController, passwordController, isDisable),
-                LoginSuccess() => const SizedBox(),
-              });
-              return Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 200.h),
-                    child: Center(
-                      child: Column(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 200.h),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'LOGIN',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColor.colorBlack,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'Input the right details to login the right way.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: const Color(0xFF737C96),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    loginWidget,
+                    CommonButton(
+                      isDisable: isDisable,
+                      buttonText: 'Login',
+                      onPressedFunction: () {
+                        _handleLogin(context);
+                      },
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text.rich(
+                      TextSpan(
                         children: [
-                          Text(
-                            'LOGIN',
-                            textAlign: TextAlign.center,
+                          TextSpan(
+                            text: 'Dont have an account? ',
                             style: TextStyle(
-                              color: AppColor.colorBlack,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Text(
-                            'Input the right details to login the right way.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: const Color(0xFF737C96),
+                              color: AppColor.colorFontBlack,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          child,
-                          CommonButton(
-                            isDisable: isDisable,
-                            buttonText: 'Login',
-                            onPressedFunction: () {
-                              _handleLogin(context);
-                            },
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Dont have an account? ',
-                                  style: TextStyle(
-                                    color: AppColor.colorFontBlack,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      context.go(ScreenRoute.registerScreen);
-                                    },
-                                  text: 'Register',
-                                  style: TextStyle(
-                                    color: AppColor.colorBlack,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                context.go(ScreenRoute.registerScreen);
+                              },
+                            text: 'Register',
+                            style: TextStyle(
+                              color: AppColor.colorBlack,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
-              );
-            },
-          ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -20,6 +20,9 @@ class AppRouter {
       if (ScreenRoute.publicRoute.contains(state.fullPath)) {
         return null;
       }
+      if (context.read<LoginBloc>().state is HandleTokenSuccess) {
+        return null;
+      }
       return ScreenRoute.loginScreen;
     },
     routes: [
@@ -27,15 +30,15 @@ class AppRouter {
         path: ScreenRoute.loginScreen,
         builder: (context, state) => BlocProvider(
           create: (context) => LoginBloc(
-            AuthenticationRepositoryImpl(
-              authenticateNetworkClient: AuthenticateNetworkClient(
-                secureStorage: SecureStorageImpl(),
-                networkClient: NetworkClient(
-                  dio: Dio(),
+              AuthenticationRepositoryImpl(
+                authenticateNetworkClient: AuthenticateNetworkClient(
+                  secureStorage: SecureStorageImpl(),
+                  networkClient: NetworkClient(
+                    dio: Dio(),
+                  ),
                 ),
               ),
-            ),
-          ),
+              SecureStorageImpl()),
           child: const LoginScreen(),
         ),
       ),

@@ -1,6 +1,13 @@
 import 'package:cleaning_duty_project/core/constants/constants.dart';
+import 'package:cleaning_duty_project/core/networks/network_client.dart';
+import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
+import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
+import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,6 +24,48 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return RepositoryProvider(
+      create: (context) => AuthenticationRepositoryImpl(
+        authenticateNetworkClient: AuthenticateNetworkClient(
+          secureStorage: SecureStorageImpl(),
+          networkClient: NetworkClient(
+            dio: Dio(),
+          ),
+        ),
+      ),
+      child: BlocProvider(
+        create: (context) => LoginBloc(
+          context.read<AuthenticationRepositoryImpl>(),
+          SecureStorageImpl(),
+        ),
+        child: const AppContent(),
+      ),
+    );
+  }
+}
+
+class AppContent extends StatefulWidget {
+  const AppContent({
+    super.key,
+  });
+
+  @override
+  State<AppContent> createState() => _AppContentState();
+}
+
+class _AppContentState extends State<AppContent> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<LoginBloc>().add(HandleToken());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loginState = context.watch<LoginBloc>().state;
+    if (loginState is LoginInitial) {
+      return Container();
+    }
     return ScreenUtilInit(
       builder: (_, child) {
         return MaterialApp.router(
