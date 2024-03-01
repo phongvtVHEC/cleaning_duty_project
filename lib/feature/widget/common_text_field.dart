@@ -1,13 +1,18 @@
+import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonTextField extends StatelessWidget {
   final String label;
   final TextEditingController? inputController;
+  final bool? isDisable;
+  final Color? textFieldColor;
   const CommonTextField({
     Key? key,
     required this.label,
     this.inputController,
+    this.isDisable,
+    this.textFieldColor,
   }) : super(key: key);
 
   @override
@@ -19,27 +24,34 @@ class CommonTextField extends StatelessWidget {
           height: 59.h,
           child: Stack(
             children: [
-              TextField(
-                controller: inputController,
-                decoration: InputDecoration(
-                  labelText: label,
-                  labelStyle: TextStyle(
-                    color: const Color(0xFF337EEE),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+              IgnorePointer(
+                ignoring: isDisable ?? false,
+                child: TextField(
+                  enableInteractiveSelection: isDisable == true ? false : true,
+                  readOnly: isDisable ?? false,
+                  controller: inputController,
+                  decoration: InputDecoration(
+                    labelText: label,
+                    labelStyle: TextStyle(
+                      color: AppColor.colorTextFieldLabel,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1.w, color: AppColor.colorTextFieldBorder),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2.w, color: AppColor.colorTextFieldBorder),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: isDisable == true
+                        ? AppColor.colorTextFieldDisable
+                        : textFieldColor ?? AppColor.colorWhite,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 1.w, color: const Color(0xFFEBF2FD)),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 2.w, color: const Color(0xFFEBF2FD)),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
                 ),
               ),
             ],

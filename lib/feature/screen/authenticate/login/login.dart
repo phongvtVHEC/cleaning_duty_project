@@ -21,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool isDisable = false;
 
   void _handleLogin(BuildContext context) {
     context.read<LoginBloc>().add(
@@ -39,6 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
+            if (state is LoginProgress) {
+              isDisable = true;
+            }
             if (state is LoginSuccess) {
               ToastUtil.showSuccessMessage("Login Successfully");
               context.go(ScreenRoute.homeScreen);
@@ -51,12 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context, state) {
               final child = (switch (state) {
                 LoginInitial() => _buildInitialLoginWidget(
-                    usernameController, passwordController),
+                    usernameController, passwordController, isDisable),
                 LoginProgress() => const Center(
                     child: CircularProgressIndicator(),
                   ),
                 LoginFailure() => _buildInitialLoginWidget(
-                    usernameController, passwordController),
+                    usernameController, passwordController, isDisable),
                 LoginSuccess() => const Text('Login Success'),
               });
               return Column(
@@ -89,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child,
                           CommonButton(
+                            isDisable: isDisable,
                             buttonText: 'Login',
                             onPressedFunction: () {
                               _handleLogin(context);
@@ -139,13 +144,19 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 Widget _buildInitialLoginWidget(TextEditingController usernameController,
-    TextEditingController passwordController) {
+    TextEditingController passwordController, bool isDisable) {
   return Column(
     children: [
       SizedBox(height: 30.h),
-      CommonTextField(label: 'Username', inputController: usernameController),
+      CommonTextField(
+          label: 'Username',
+          inputController: usernameController,
+          isDisable: isDisable),
       SizedBox(height: 20.h),
-      CommonTextField(label: 'Password', inputController: passwordController),
+      CommonTextField(
+          label: 'Password',
+          inputController: passwordController,
+          isDisable: isDisable),
       SizedBox(height: 20.h),
     ],
   );
