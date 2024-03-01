@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonTextField extends StatelessWidget {
   final String label;
-  final TextEditingController inputController;
+  final TextEditingController? inputController;
   const CommonTextField({
     Key? key,
     required this.label,
-    required this.inputController,
+    this.inputController,
   }) : super(key: key);
 
   @override

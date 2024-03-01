@@ -59,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     usernameController, passwordController),
                 LoginSuccess() => const Text('Login Success'),
               });
-
               return Column(
                 children: [
                   Padding(
@@ -112,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextSpan(
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      context.push(ScreenRoute.registerScreen);
+                                      context.go(ScreenRoute.registerScreen);
                                     },
                                   text: 'Register',
                                   style: TextStyle(
