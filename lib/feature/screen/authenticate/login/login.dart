@@ -44,10 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
               isDisable = true;
             }
             if (state is LoginSuccess) {
+              isDisable = false;
               ToastUtil.showSuccessMessage("Login Successfully");
               context.go(ScreenRoute.homeScreen);
             }
             if (state is LoginFailure) {
+              isDisable = false;
               ToastUtil.showErrorMessage("Login Failed");
             }
           },
@@ -56,9 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
               final child = (switch (state) {
                 LoginInitial() => _buildInitialLoginWidget(
                     usernameController, passwordController, isDisable),
-                LoginProgress() => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                LoginProgress() => _buildInitialLoginWidget(
+                    usernameController, passwordController, isDisable),
                 LoginFailure() => _buildInitialLoginWidget(
                     usernameController, passwordController, isDisable),
                 LoginSuccess() => const Text('Login Success'),
