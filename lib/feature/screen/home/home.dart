@@ -14,10 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _handleLogout(BuildContext context) {
-    context.read<LogoutBloc>().add(LogoutStarted());
-  }
-
   bool isDisable = false;
 
   @override
@@ -44,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
             CommonButton(
               isDisable: isDisable,
               buttonText: 'LogOut',
-              onPressedFunction: () => _handleLogout(context),
+              onPressedFunction: () =>
+                  context.read<LogoutBloc>().handleLogout(context),
             )
           ],
         ),

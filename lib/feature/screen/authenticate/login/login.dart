@@ -1,7 +1,6 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/utils/toast_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
-import 'package:cleaning_duty_project/feature/data/entities/request/authentication/login/login_request.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/widget/common_button.dart';
 import 'package:cleaning_duty_project/feature/widget/common_text_field.dart';
@@ -22,17 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isDisable = false;
-
-  void _handleLogin(BuildContext context) {
-    context.read<LoginBloc>().add(
-          LoginStarted(
-            loginRequest: LoginRequest(
-              username: usernameController.text,
-              password: passwordController.text,
-            ),
-          ),
-        );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           isDisable = false;
           ToastUtil.showSuccessMessage("Login Successfully");
           context.read<LoginBloc>().add(HandleToken());
+          Future.delayed(const Duration(milliseconds: 500));
           context.go(ScreenRoute.homeScreen);
         }
         if (state is LoginFailure) {
@@ -103,7 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       isDisable: isDisable,
                       buttonText: 'Login',
                       onPressedFunction: () {
-                        _handleLogin(context);
+                        context.read<LoginBloc>().handleLogin(
+                            context, usernameController, passwordController);
                       },
                     ),
                     SizedBox(
