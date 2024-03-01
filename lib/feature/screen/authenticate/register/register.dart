@@ -69,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      // child,
+                      child,
                       CommonButton(
                         buttonText: 'Register',
                         onPressedFunction: () {},
