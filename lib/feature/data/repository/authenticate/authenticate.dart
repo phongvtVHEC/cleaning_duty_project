@@ -6,7 +6,9 @@ import 'package:cleaning_duty_project/feature/data/remote/authenticate/authentic
 
 abstract class IAuthenticationRepository {
   Future<LoginResponse> login(LoginRequest loginRequest);
+  Future<void> getAccessToken();
   Future<RegisterResponse> register(RegisterRequest registerRequest);
+  Future<bool> logout();
 }
 
 class AuthenticationRepositoryImpl extends IAuthenticationRepository {
@@ -28,5 +30,15 @@ class AuthenticationRepositoryImpl extends IAuthenticationRepository {
         registerRequest.email!,
         registerRequest.password!);
     return response;
+  }
+
+  @override
+  Future<bool> logout() {
+    return authenticateNetworkClient.logout();
+  }
+
+  @override
+  Future<String?> getAccessToken() async {
+    return await authenticateNetworkClient.getAccessToken();
   }
 }

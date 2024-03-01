@@ -36,7 +36,6 @@ class MainApp extends StatelessWidget {
       child: BlocProvider(
         create: (context) => LoginBloc(
           context.read<AuthenticationRepositoryImpl>(),
-          SecureStorageImpl(),
         ),
         child: const AppContent(),
       ),

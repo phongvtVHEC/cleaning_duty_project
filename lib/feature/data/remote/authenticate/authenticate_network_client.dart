@@ -32,6 +32,11 @@ class AuthenticateNetworkClient {
     }
   }
 
+  Future<String?> getAccessToken() async {
+    final response = await secureStorage.getAccessToken();
+    return response;
+  }
+
   Future<RegisterResponse> register(
       String username, String email, String password) async {
     final response = await networkClient.invoke(
@@ -49,5 +54,10 @@ class AuthenticateNetworkClient {
         requestOptions: response.requestOptions,
       ));
     }
+  }
+
+  Future<bool> logout() async {
+    await secureStorage.removeAllAsync();
+    return true;
   }
 }
