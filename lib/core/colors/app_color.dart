@@ -5,6 +5,8 @@ abstract class AppColor {
 
   //Font Colors
   static const Color colorFontBlack = Color(0xFF737C96);
+  static const Color colorFont0857A0 = Color(0xFF0857A0);
+  static const Color colorFont0D8BFF = Color(0xFF0D8BFF);
 
   //Toast Colors
   static const Color colorToastError = Color(0xFFE74C3C);
@@ -22,4 +24,11 @@ abstract class AppColor {
   //Button Colors
   static const Color colorButtonPrimary = Color(0xFF337EEE);
   static const Color colorButtonDisable = Color(0xFFCCCCCC);
+  static const Color colorButtonCircleDate = Color(0xFFFFE500);
+
+  //AppBar Colors
+  static const Color colorAppBar = Color(0xFF0D8BFF);
+
+  //Background Colors
+  static const Color colorBackground = Color(0xFFF2FBFF);
 }

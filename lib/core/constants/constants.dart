@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class Constants {
   // App Fonts
   static const String app_font_DM_Sans = 'DM Sans';
+  static const String app_font_Lato = 'Lato';
 
   // App API Endpoints
   static String api_base_url = '${dotenv.env['API_BASE_URL']}';
