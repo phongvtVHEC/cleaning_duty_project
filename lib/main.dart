@@ -70,6 +70,7 @@ class _AppContentState extends State<AppContent> {
     return ScreenUtilInit(
       builder: (_, child) {
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: Constants.app_font_DM_Sans,
             scaffoldBackgroundColor: Colors.white,

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 
 class AuthenticateNetworkClient {
   final NetworkClient networkClient;
-  final SecureStorage secureStorage;
+  final SecureStorageImpl secureStorage;
 
   AuthenticateNetworkClient(
       {required this.secureStorage, required this.networkClient});
@@ -20,8 +20,8 @@ class AuthenticateNetworkClient {
       requestBody: {"username": username, "password": password},
     );
     if (response.statusCode == 200) {
-      secureStorage.saveAccessToken(response.data['accessToken']);
-      secureStorage.saveRefreshToken(response.data['refreshToken']);
+      await secureStorage.saveAccessToken(response.data['accessToken']);
+      await secureStorage.saveRefreshToken(response.data['refreshToken']);
       return LoginResponse.fromJson(response.data);
     } else {
       throw ServerException.withException(

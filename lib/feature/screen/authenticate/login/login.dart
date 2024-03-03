@@ -46,12 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
           isDisable = false;
           ToastUtil.showSuccessMessage("Login Successfully");
           context.read<LoginBloc>().add(HandleToken());
-          Future.delayed(const Duration(milliseconds: 500));
           context.go(ScreenRoute.homeScreen);
         }
         if (state is LoginFailure) {
           isDisable = false;
           ToastUtil.showErrorMessage("Login Failed");
+        }
+        if (state is HandleTokenSuccess) {
+          context.go(ScreenRoute.homeScreen);
         }
       },
       child: loginWidget,

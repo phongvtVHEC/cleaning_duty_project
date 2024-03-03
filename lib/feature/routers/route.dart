@@ -17,7 +17,7 @@ class AppRouter {
   static final GoRouter _router = GoRouter(
     initialLocation: ScreenRoute.homeScreen,
     debugLogDiagnostics: true,
-    redirect: (context, state) {
+    redirect: (context, state) async {
       if (ScreenRoute.publicRoute.contains(state.fullPath)) {
         return null;
       }
