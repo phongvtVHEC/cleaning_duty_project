@@ -18,42 +18,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool isDisable = false;
-
   @override
   Widget build(BuildContext context) {
     final loginState = context.watch<LoginBloc>().state;
 
     var loginWidget = (switch (loginState) {
       LoginInitial() => _buildInitialLoginWidget(
-          usernameController, passwordController, isDisable),
+          context,
+          context.read<LoginBloc>().usernameController,
+          context.read<LoginBloc>().passwordController,
+          context.read<LoginBloc>().isDisable),
       LoginProgress() => _buildInitialLoginWidget(
-          usernameController, passwordController, isDisable),
+          context,
+          context.read<LoginBloc>().usernameController,
+          context.read<LoginBloc>().passwordController,
+          context.read<LoginBloc>().isDisable),
       LoginFailure() => _buildInitialLoginWidget(
-          usernameController, passwordController, isDisable),
+          context,
+          context.read<LoginBloc>().usernameController,
+          context.read<LoginBloc>().passwordController,
+          context.read<LoginBloc>().isDisable),
       LoginSuccess() => const SizedBox(),
-      _ => const SizedBox(),
     });
 
     loginWidget = BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginProgress) {
-          isDisable = true;
+          context.read<LoginBloc>().isDisable = true;
         }
         if (state is LoginSuccess) {
-          isDisable = false;
+          context.read<LoginBloc>().isDisable = false;
           ToastUtil.showSuccessMessage("Login Successfully");
-          context.read<LoginBloc>().add(HandleToken());
           context.go(ScreenRoute.homeScreen);
         }
         if (state is LoginFailure) {
-          isDisable = false;
+          context.read<LoginBloc>().isDisable = false;
           ToastUtil.showErrorMessage("Login Failed");
-        }
-        if (state is HandleTokenSuccess) {
-          context.go(ScreenRoute.homeScreen);
         }
       },
       child: loginWidget,
@@ -90,14 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     loginWidget,
-                    CommonButton(
-                      isDisable: isDisable,
-                      buttonText: 'Login',
-                      onPressedFunction: () {
-                        context.read<LoginBloc>().handleLogin(
-                            context, usernameController, passwordController);
-                      },
-                    ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -139,8 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Widget _buildInitialLoginWidget(TextEditingController usernameController,
-    TextEditingController passwordController, bool isDisable) {
+Widget _buildInitialLoginWidget(
+    BuildContext context,
+    TextEditingController usernameController,
+    TextEditingController passwordController,
+    bool isDisable) {
   return Column(
     children: [
       SizedBox(height: 30.h),
@@ -155,6 +150,15 @@ Widget _buildInitialLoginWidget(TextEditingController usernameController,
           inputController: passwordController,
           isDisable: isDisable),
       SizedBox(height: 20.h),
+      CommonButton(
+        isDisable: isDisable,
+        buttonText: 'Login',
+        onPressedFunction: () {
+          context
+              .read<LoginBloc>()
+              .handleLogin(context, usernameController, passwordController);
+        },
+      ),
     ],
   );
 }

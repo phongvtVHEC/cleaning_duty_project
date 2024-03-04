@@ -7,5 +7,3 @@ class LoginStarted extends LoginEvent {
 
   LoginStarted({required this.loginRequest});
 }
-
-class HandleToken extends LoginEvent {}

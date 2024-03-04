@@ -10,10 +10,12 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this.authenticationRepository) : super(LoginInitial()) {
     on<LoginStarted>(_onLoginStarted);
-    on<HandleToken>(_onHandleToken);
   }
 
   final AuthenticationRepositoryImpl authenticationRepository;
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isDisable = false;
 
   void _onLoginStarted(LoginStarted event, Emitter<LoginState> emit) async {
     emit(LoginProgress());
@@ -24,15 +26,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } on ServerException {
       emit(LoginFailure());
-    }
-  }
-
-  void _onHandleToken(HandleToken event, Emitter<LoginState> emit) async {
-    var result = await authenticationRepository.getAccessToken();
-    if (result != null) {
-      emit(HandleTokenSuccess(token: result));
-    } else {
-      emit(HandleTokenFailure());
     }
   }
 

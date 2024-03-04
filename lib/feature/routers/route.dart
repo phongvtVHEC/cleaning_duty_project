@@ -2,6 +2,7 @@ import 'package:cleaning_duty_project/core/networks/network_client.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/home/bloc/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
@@ -21,10 +22,14 @@ class AppRouter {
       if (ScreenRoute.publicRoute.contains(state.fullPath)) {
         return null;
       }
-      if (context.read<LoginBloc>().state is HandleTokenSuccess) {
+      final secureStorage = SecureStorageImpl();
+      final accessToken = await secureStorage.getAccessToken();
+
+      if (accessToken != null) {
         return null;
+      } else {
+        return ScreenRoute.loginScreen;
       }
-      return ScreenRoute.loginScreen;
     },
     routes: [
       GoRoute(
@@ -61,17 +66,24 @@ class AppRouter {
       ),
       GoRoute(
         path: ScreenRoute.homeScreen,
-        builder: (context, state) => BlocProvider(
-          create: (context) => LogoutBloc(
-            AuthenticationRepositoryImpl(
-              authenticateNetworkClient: AuthenticateNetworkClient(
-                secureStorage: SecureStorageImpl(),
-                networkClient: NetworkClient(
-                  dio: Dio(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<HomeBloc>(
+              create: (context) => HomeBloc(),
+            ),
+            BlocProvider<LogoutBloc>(
+              create: (context) => LogoutBloc(
+                AuthenticationRepositoryImpl(
+                  authenticateNetworkClient: AuthenticateNetworkClient(
+                    secureStorage: SecureStorageImpl(),
+                    networkClient: NetworkClient(
+                      dio: Dio(),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
           child: const HomeScreen(),
         ),
       ),

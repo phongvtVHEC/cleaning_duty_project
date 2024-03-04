@@ -18,20 +18,3 @@ class LoginSuccess extends LoginState {}
 
 class LoginFailure extends LoginState {}
 
-
-class HandleTokenSuccess extends LoginState {
-
-  final String token;
-
-
-  HandleTokenSuccess({
-
-    required this.token,
-
-  });
-
-}
-
-
-class HandleTokenFailure extends LoginState {}
-
