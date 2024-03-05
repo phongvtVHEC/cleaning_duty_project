@@ -14,21 +14,19 @@ class BottomSheetBloc extends Bloc<BottomSheetEvent, BottomSheetState> {
   void _onBottomSheetOpened(
       BottomSheetStarted event, Emitter<BottomSheetState> emit) {
     if (event.isOpened) {
-      // solidController.show();
       if (solidController.isOpened == true) emit(BottomSheetOpened());
     } else {
-      // solidController.hide();
       if (solidController.isOpened == false) emit(BottomSheetClosed());
     }
   }
 
   void handleBottomSheetOpened(BuildContext context) {
-    // context.read<BottomSheetBloc>().add(BottomSheetStarted(true));
+    context.read<BottomSheetBloc>().add(BottomSheetStarted(true));
     solidController.show();
   }
 
   void handleBottomSheetClosed(BuildContext context) {
-    // context.read<BottomSheetBloc>().add(BottomSheetStarted(false));
+    context.read<BottomSheetBloc>().add(BottomSheetStarted(false));
     solidController.hide();
   }
 }

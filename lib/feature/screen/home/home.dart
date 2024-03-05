@@ -24,8 +24,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    Widget bottomSheetIcon =
-        Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30.sp);
     return Scaffold(
       backgroundColor: AppColor.colorWhite,
       key: context.read<HomeBloc>().key,
@@ -79,69 +77,61 @@ class _HomeScreenState extends State<HomeScreen> {
               .onPressForwardFunction();
         },
       ),
-      bottomSheet: BlocListener<BottomSheetBloc, BottomSheetState>(
-        listener: (context, state) {
-          if (state is BottomSheetOpened) {
-            bottomSheetIcon = Icon(Icons.keyboard_arrow_down,
-                color: Colors.white, size: 30.sp);
-          }
-          if (state is BottomSheetClosed) {
-            bottomSheetIcon =
-                Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30.sp);
-          }
+      bottomSheet: SolidBottomSheet(
+        controller: context.read<BottomSheetBloc>().solidController,
+        onShow: () {
+          context.read<BottomSheetBloc>().handleBottomSheetOpened(context);
         },
-        child: BlocBuilder<BottomSheetBloc, BottomSheetState>(
-          builder: (context, state) {
-            return SolidBottomSheet(
-              controller: context.read<BottomSheetBloc>().solidController,
-              onShow: () {
-                context
-                    .read<BottomSheetBloc>()
-                    .handleBottomSheetOpened(context);
-              },
-              onHide: () {
-                context
-                    .read<BottomSheetBloc>()
-                    .handleBottomSheetClosed(context);
-              },
-              toggleVisibilityOnTap: true,
-              draggableBody: false,
-              maxHeight: 400.h,
-              smoothness: Smoothness.medium,
-              headerBar: Container(
-                decoration: const BoxDecoration(
-                  color: AppColor.colorAppBar,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                height: 93.h,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    bottomSheetIcon,
-                    Text(
-                      'Quick actions',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constants.app_font_Lato,
-                      ),
-                    ),
-                  ],
+        onHide: () {
+          context.read<BottomSheetBloc>().handleBottomSheetClosed(context);
+        },
+        toggleVisibilityOnTap: true,
+        draggableBody: false,
+        maxHeight: 400.h,
+        smoothness: Smoothness.medium,
+        headerBar: Container(
+          decoration: const BoxDecoration(
+            color: AppColor.colorAppBar,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+          ),
+          height: 93.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 5.h,
+              ),
+              BlocBuilder<BottomSheetBloc, BottomSheetState>(
+                builder: (context, state) {
+                  Icon? bottomSheetIcon;
+                  if (state is BottomSheetOpened) {
+                    bottomSheetIcon = Icon(Icons.keyboard_arrow_down,
+                        color: Colors.white, size: 30.sp);
+                  } else if (state is BottomSheetClosed) {
+                    bottomSheetIcon = Icon(Icons.keyboard_arrow_up,
+                        color: Colors.white, size: 30.sp);
+                  }
+                  return bottomSheetIcon ?? Container();
+                },
+              ),
+              Text(
+                'Quick actions',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: Constants.app_font_Lato,
                 ),
               ),
-              body: Container(
-                color: AppColor.colorAppBar,
-              ),
-            );
-          },
+            ],
+          ),
+        ),
+        body: Container(
+          color: AppColor.colorAppBar,
         ),
       ),
       body: Calendar(
