@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/feature/widget/Calendar/calendar_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +10,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>(_onHomeStarted);
     on<BottomSheetEvent>(_onBottomSheetInitial);
   }
+  final GlobalKey<ScaffoldState> key = GlobalKey();
+  final GlobalKey<CalendarState> calendarKey = GlobalKey();
+  bool isOpened = false;
+  IconData iconBottomSheet = Icons.expand_less_sharp;
 
   void _onHomeStarted(HomeEvent event, Emitter<HomeState> emit) {
     emit(HomeInitial());
@@ -19,21 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(event.isOpened ? BottomSheetOpened() : BottomSheetClosed());
   }
 
-  void handleBottomSheetOpened(BuildContext context, bool isOpened) {
-    isOpened = true;
-    context.read<HomeBloc>().add(
-          BottomSheetEvent(
-            isOpened: isOpened,
-          ),
-        );
-  }
-
-  void handleBottomSheetClosed(BuildContext context, bool isClosed) {
-    isClosed = false;
-    context.read<HomeBloc>().add(
-          BottomSheetEvent(
-            isOpened: isClosed,
-          ),
-        );
+  void handleBottomSheetOpened(BuildContext context) {
+    isOpened = !isOpened;
+    context.read<HomeBloc>().add(BottomSheetEvent(isOpened: isOpened));
   }
 }
