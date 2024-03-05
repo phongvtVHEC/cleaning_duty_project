@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
-import 'package:cleaning_duty_project/feature/widget/Calendar/calendar_page_controller.dart';
-import 'package:cleaning_duty_project/feature/widget/Calendar/models/date.dart';
-import 'package:cleaning_duty_project/feature/widget/Calendar/widgets/calendar_widget.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/calendar_page_controller.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/widgets/calendar_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'utils.dart';

@@ -1,8 +1,8 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
-import 'package:cleaning_duty_project/feature/widget/common_button.dart';
-import 'package:cleaning_duty_project/feature/widget/common_text_field.dart';
+import 'package:cleaning_duty_project/feature/widget/Button/common_button.dart';
+import 'package:cleaning_duty_project/feature/widget/TextField/common_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

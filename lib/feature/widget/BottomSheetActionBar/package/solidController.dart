@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_final_fields, file_names
 
 import 'dart:async';
-import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/smoothness.dart';
-import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/solid_bloc.dart';
+import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/smoothness.dart';
+import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solid_bloc.dart';
 import 'package:flutter/foundation.dart';
 
 class SolidController extends ValueNotifier<bool> {

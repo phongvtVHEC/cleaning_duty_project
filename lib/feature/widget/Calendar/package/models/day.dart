@@ -1,4 +1,4 @@
-import 'package:cleaning_duty_project/feature/widget/Calendar/models/date.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
 
 class Day {
   final int? value;

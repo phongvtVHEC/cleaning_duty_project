@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables, curly_braces_in_flow_control_structures
 
-import 'package:cleaning_duty_project/feature/widget/Calendar/models/date.dart';
-import 'package:cleaning_duty_project/feature/widget/Calendar/models/day.dart';
-import 'package:cleaning_duty_project/feature/widget/Calendar/widgets/day_widget.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/widgets/day_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'controller.dart';

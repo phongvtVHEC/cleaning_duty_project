@@ -1,4 +1,4 @@
-import 'package:cleaning_duty_project/feature/widget/Calendar/models/day.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
 import 'package:flutter/material.dart';
 
 class DayWidget extends StatelessWidget {

@@ -1,17 +1,13 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
-import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/core/utils/toast_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
-import 'package:cleaning_duty_project/feature/blocs/home/bottom_sheet/bottom_sheet_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
-import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/smoothness.dart';
-import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/solidBottomSheet.dart';
-import 'package:cleaning_duty_project/feature/widget/Calendar/calendar_page.dart';
-import 'package:cleaning_duty_project/feature/widget/common_appbar_with_date_bar.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/common_calendar.dart';
+import 'package:cleaning_duty_project/feature/widget/DateBar/common_appbar_with_date_bar.dart';
+import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/common_bottom_sheet_action_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -77,79 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
               .onPressForwardFunction();
         },
       ),
-      bottomSheet: SolidBottomSheet(
-        controller: context.read<BottomSheetBloc>().solidController,
-        onShow: () {
-          context.read<BottomSheetBloc>().handleBottomSheetOpened(context);
-        },
-        onHide: () {
-          context.read<BottomSheetBloc>().handleBottomSheetClosed(context);
-        },
-        toggleVisibilityOnTap: true,
-        draggableBody: false,
-        maxHeight: 400.h,
-        smoothness: Smoothness.medium,
-        headerBar: Container(
-          decoration: const BoxDecoration(
-            color: AppColor.colorAppBar,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40),
-            ),
-          ),
-          height: 93.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 5.h,
-              ),
-              BlocBuilder<BottomSheetBloc, BottomSheetState>(
-                builder: (context, state) {
-                  Icon? bottomSheetIcon;
-                  if (state is BottomSheetOpened) {
-                    bottomSheetIcon = Icon(Icons.keyboard_arrow_down,
-                        color: Colors.white, size: 30.sp);
-                  } else if (state is BottomSheetClosed) {
-                    bottomSheetIcon = Icon(Icons.keyboard_arrow_up,
-                        color: Colors.white, size: 30.sp);
-                  }
-                  return bottomSheetIcon ?? Container();
-                },
-              ),
-              Text(
-                'Quick actions',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: Constants.app_font_Lato,
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: Container(
-          color: AppColor.colorAppBar,
-        ),
-      ),
-      body: Calendar(
-        key: context.read<HomeBloc>().calendarKey,
-        disable: false,
-        initialDate: DateTime.now(),
-        weekendOpacityEnable: true,
-        space: 20,
-        onSelected: print,
-        backgroundColor: Colors.white,
-        activeColor: Colors.orange,
-        textStyleDays:
-            const TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-        textStyleWeekDay: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.black, fontSize: 9.sp),
-        selectedStyle:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      ),
+      bottomSheet: const CommonBottomSheetActionBar(),
+      body: const CommonCalendar(),
     );
   }
 }

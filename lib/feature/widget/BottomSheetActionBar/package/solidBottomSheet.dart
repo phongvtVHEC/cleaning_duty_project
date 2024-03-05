@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable, prefer_conditional_assignment, library_private_types_in_public_api, curly_braces_in_flow_control_structures, file_names
 
-import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/solidController.dart';
+import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solidController.dart';
 import 'package:flutter/material.dart';
 
 import 'smoothness.dart';
