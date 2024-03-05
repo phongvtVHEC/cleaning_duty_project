@@ -13,7 +13,6 @@ class LogoutBloc extends Bloc<LogoutEvent, LogoutState> {
 
   void _onLogoutStarted(LogoutStarted event, Emitter<LogoutState> emit) async {
     final response = await authenticationRepository.logout();
-
     if (response) {
       emit(LogoutSuccess());
     } else {

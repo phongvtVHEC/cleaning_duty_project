@@ -32,20 +32,20 @@ class CommonAppbarWithDateBar extends StatelessWidget
             height: 100.0.h,
             child: Stack(
               children: [
-                const Center(
+                Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // IconButton(
-                      //   icon: Icon(
-                      //     Icons.dehaze,
-                      //     color: AppColor.colorWhite,
-                      //     size: 20.sp,
-                      //   ),
-                      //   onPressed: () {
-                      //     globalKey.currentState!.openDrawer();
-                      //   },
-                      // ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.dehaze,
+                          color: AppColor.colorWhite,
+                          size: 20.sp,
+                        ),
+                        onPressed: () {
+                          globalKey.currentState!.openDrawer();
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -56,6 +56,7 @@ class CommonAppbarWithDateBar extends StatelessWidget
                       color: AppColor.colorWhite,
                       fontFamily: Constants.app_font_Lato,
                       fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

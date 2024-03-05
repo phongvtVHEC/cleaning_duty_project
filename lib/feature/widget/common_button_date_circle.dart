@@ -20,39 +20,31 @@ class CommonButtonDateCircle extends StatelessWidget {
         width: 35.w,
         height: 35.h,
         child: Stack(
+          alignment: Alignment.center,
           children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    width: 35.w,
-                    height: 35.h,
-                    decoration: ShapeDecoration(
-                      color: AppColor.colorButtonCircleDate,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(26),
-                      ),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x2BCECECE),
-                          blurRadius: 20,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                  ),
-                  Icon(
-                    icon,
-                    size: 12.sp,
-                    color: AppColor.colorFont0D8BFF,
-                  ),
+            Container(
+              alignment: Alignment.center,
+              width: 30.w,
+              height: 25.h,
+              decoration: ShapeDecoration(
+                color: AppColor.colorButtonCircleDate,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x2BCECECE),
+                    blurRadius: 20,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
                 ],
               ),
+            ),
+            Icon(
+              icon,
+              size: 12.sp,
+              color: AppColor.colorFont0D8BFF,
             ),
           ],
         ),

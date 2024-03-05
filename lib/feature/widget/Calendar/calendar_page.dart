@@ -22,8 +22,8 @@ class Calendar extends StatefulWidget {
   final Widget? previous;
   final Widget? next;
   final double? space;
-  Function()? onPressedBack;
-  Function()? onPressedForward;
+  VoidCallback? onPressedBack;
+  VoidCallback? onPressedForward;
 
   Calendar({
     Key? key,
@@ -51,10 +51,10 @@ class Calendar extends StatefulWidget {
         super(key: key);
 
   @override
-  _CalendarState createState() => _CalendarState();
+  CalendarState createState() => CalendarState();
 }
 
-class _CalendarState extends State<Calendar>
+class CalendarState extends State<Calendar>
     with SingleTickerProviderStateMixin {
   late CalendarPageController controller;
   late PageController pageController;
@@ -69,18 +69,6 @@ class _CalendarState extends State<Calendar>
     );
 
     widget.onSelected!(controller.dataCollection.currentMonth);
-    widget.onPressedBack = () {
-      pageController.previousPage(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.linear,
-      );
-    };
-    widget.onPressedForward = () {
-      pageController.nextPage(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.linear,
-      );
-    };
 
     super.initState();
   }
@@ -90,6 +78,20 @@ class _CalendarState extends State<Calendar>
     controller.dispose();
 
     super.dispose();
+  }
+
+  void onPressBackFunction() {
+    pageController.previousPage(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.linear,
+    );
+  }
+
+  void onPressForwardFunction() {
+    pageController.nextPage(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.linear,
+    );
   }
 
   @override
@@ -114,7 +116,12 @@ class _CalendarState extends State<Calendar>
                       GestureDetector(
                         onTap: widget.disable == true
                             ? null
-                            : widget.onPressedBack,
+                            : () {
+                                pageController.previousPage(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.linear,
+                                );
+                              },
                         child: widget.previous,
                       ),
                     SizedBox(
@@ -124,7 +131,12 @@ class _CalendarState extends State<Calendar>
                       GestureDetector(
                         onTap: widget.disable == true
                             ? null
-                            : widget.onPressedForward,
+                            : () {
+                                pageController.nextPage(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.linear,
+                                );
+                              },
                         child: widget.next,
                       )
                   ],
