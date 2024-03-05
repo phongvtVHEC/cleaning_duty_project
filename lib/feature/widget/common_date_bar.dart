@@ -20,10 +20,12 @@ class CommonDateBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 80.0.h,
-      left: 0.0.w,
-      right: 0.0.w,
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 80.0.h,
+        left: 0.0.w,
+        right: 0.0.w,
+      ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0.sp),
         child: Container(

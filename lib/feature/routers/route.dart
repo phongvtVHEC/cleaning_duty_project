@@ -2,7 +2,8 @@ import 'package:cleaning_duty_project/core/networks/network_client.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
-import 'package:cleaning_duty_project/feature/blocs/home/bloc/home_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/home/bottom_sheet/bottom_sheet_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
@@ -83,6 +84,8 @@ class AppRouter {
                 ),
               ),
             ),
+            BlocProvider<BottomSheetBloc>(
+                create: (context) => BottomSheetBloc()),
           ],
           child: const HomeScreen(),
         ),

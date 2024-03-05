@@ -21,7 +21,6 @@ dependencies:
   get_it: ^7.6.7
   flutter_dotenv: ^5.1.0
   intl: ^0.18.1
-  solid_bottom_sheet: ^0.1.10
   rxdart: ^0.26.0
   
   
