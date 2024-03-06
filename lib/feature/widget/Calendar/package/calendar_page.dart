@@ -155,8 +155,9 @@ class CalendarState extends State<Calendar>
                       style: widget.textStyleWeekDay!.copyWith(
                           color: widget.weekendOpacityEnable
                               ? index == 0 || index == 6
-                                  ? widget.textStyleWeekDay!.color!
-                                      .withOpacity(widget.weekendOpacity)
+                                  // ? widget.textStyleWeekDay!.color!
+                                  //     .withOpacity(widget.weekendOpacity)
+                                  ? Colors.red
                                   : widget.textStyleWeekDay!.color
                               : null),
                     ),

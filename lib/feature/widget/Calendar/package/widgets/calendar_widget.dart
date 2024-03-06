@@ -82,9 +82,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                     : widget.weekendOpacityEnable! &&
                                             day.isWeekend
                                         ? widget.textStyleDays!.copyWith(
-                                            color: widget.textStyleDays!.color!
-                                                .withOpacity(
-                                                    widget.weekendOpacity!))
+                                            // color: widget.textStyleDays!.color!
+                                            //     .withOpacity(
+                                            //         widget.weekendOpacity!))
+                                            color: Colors.red)
                                         : widget.textStyleDays,
                                 activeColor: widget.activeColor,
                                 backgroundColor: widget.backgroundColor,
