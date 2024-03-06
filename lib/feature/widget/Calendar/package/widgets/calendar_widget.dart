@@ -75,6 +75,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   .map((week) => TableRow(
                       children: week
                           .map((day) => DayWidget(
+                                date: day.dateTime,
                                 day: day,
                                 isSelected: daySelected == day,
                                 style: daySelected == day
@@ -85,7 +86,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                             // color: widget.textStyleDays!.color!
                                             //     .withOpacity(
                                             //         widget.weekendOpacity!))
-                                            color: Colors.red)
+                                            color: Colors.red,
+                                          )
                                         : widget.textStyleDays,
                                 activeColor: widget.activeColor,
                                 backgroundColor: widget.backgroundColor,
