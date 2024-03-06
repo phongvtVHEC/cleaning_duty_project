@@ -109,6 +109,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
     children: [
       SizedBox(height: 30.h),
       CommonTextField(
+        maxLines: 1,
         label: 'Email',
         inputController: context.read<RegisterBloc>().emailController,
         errorText: context.read<RegisterBloc>().errorEmail != ""
@@ -121,6 +122,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
       ),
       SizedBox(height: 20.h),
       CommonTextField(
+        maxLines: 1,
         label: 'Username',
         inputController: context.read<RegisterBloc>().usernameController,
         errorText: context.read<RegisterBloc>().errorUsername != ""
@@ -134,6 +136,8 @@ Widget _buildInitialRegisterUI(BuildContext context) {
       ),
       SizedBox(height: 20.h),
       CommonTextField(
+        isPassword: true,
+        maxLines: 1,
         label: 'Password',
         inputController: context.read<RegisterBloc>().passwordController,
         errorText: context.read<RegisterBloc>().errorPassword != ""
@@ -147,6 +151,8 @@ Widget _buildInitialRegisterUI(BuildContext context) {
       ),
       SizedBox(height: 20.h),
       CommonTextField(
+        maxLines: 1,
+        isPassword: true,
         label: 'Confirm Password',
         inputController: context.read<RegisterBloc>().confirmPasswordController,
         errorText: context.read<RegisterBloc>().errorPasswordConfirm != ""
