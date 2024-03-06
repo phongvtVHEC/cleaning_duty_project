@@ -5,5 +5,5 @@ class RegisterEvent {}
 class RegisterStarted extends RegisterEvent {
   final RegisterRequest registerRequest;
 
-  RegisterStarted(this.registerRequest);
+  RegisterStarted({required this.registerRequest});
 }
