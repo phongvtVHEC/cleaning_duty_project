@@ -19,12 +19,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _onLoginStarted(LoginStarted event, Emitter<LoginState> emit) async {
     emit(LoginProgress());
+    isDisable = true;
     try {
       final response = await authenticationRepository.login(event.loginRequest);
       if (response.accessToken != null) {
+        isDisable = false;
         emit(LoginSuccess());
       }
     } on ServerException {
+      isDisable = false;
       emit(LoginFailure());
     }
   }
