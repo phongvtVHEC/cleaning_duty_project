@@ -140,11 +140,13 @@ Widget _buildInitialLoginWidget(
     children: [
       SizedBox(height: 30.h),
       CommonTextField(
+          maxLines: 1,
           label: 'Username',
           inputController: usernameController,
           isDisable: isDisable),
       SizedBox(height: 20.h),
       CommonTextField(
+          maxLines: 1,
           isPassword: true,
           label: 'Password',
           inputController: passwordController,

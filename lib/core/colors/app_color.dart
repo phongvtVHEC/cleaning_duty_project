@@ -15,6 +15,8 @@ abstract class AppColor {
   //Basic Colors
   static const Color colorBlack = Color(0xFF111111);
   static const Color colorWhite = Color(0xFFFFFFFF);
+  static const Color colorFFE7E7 = Color(0xFFFFE7E7);
+  static const Color colorD60000 = Color(0xFFD60000);
 
   //TextField Colors
   static const Color colorTextFieldDisable = Color(0xffEEEEEE);

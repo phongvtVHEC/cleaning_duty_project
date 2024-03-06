@@ -7,3 +7,9 @@ class RegisterStarted extends RegisterEvent {
 
   RegisterStarted({required this.registerRequest});
 }
+
+class CleanErrorField extends RegisterEvent {
+  final String field;
+
+  CleanErrorField({required this.field});
+}
