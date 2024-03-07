@@ -7,7 +7,6 @@ class ToastUtil {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 5,
         backgroundColor: AppColor.colorToastError,
         textColor: AppColor.colorWhite,
         fontSize: 12);
@@ -18,7 +17,6 @@ class ToastUtil {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 5,
         backgroundColor: AppColor.colorToastSuccess,
         textColor: AppColor.colorWhite,
         fontSize: 12);

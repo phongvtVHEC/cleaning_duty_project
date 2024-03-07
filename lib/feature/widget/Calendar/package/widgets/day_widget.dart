@@ -1,5 +1,6 @@
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DayWidget extends StatelessWidget {
   final Day? day;
@@ -42,18 +43,31 @@ class DayWidget extends StatelessWidget {
           ),
         ),
         padding: const EdgeInsets.all(8),
-        child: Text(
-          day!.label,
-          textAlign: TextAlign.center,
-          style:
-              (isCurrentDay && isCurrentMonth && isCurrentYear) && !isSelected
-                  ? (style!.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: const Color(0xFFFFC700),
-                      decorationThickness: 2.0,
-                    ))
-                  : style,
-        ),
+        child: Stack(children: [
+          Text(
+            day!.label,
+            textAlign: TextAlign.center,
+            style:
+                (isCurrentDay && isCurrentMonth && isCurrentYear) && !isSelected
+                    ? (style!.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: const Color(0xFFFFC700),
+                        decorationThickness: 2.0,
+                      ))
+                    : style,
+          ),
+          Visibility(
+            visible: day!.isWeekend == false && day!.value != 0,
+            child: Container(
+              width: 10.sp,
+              height: 10.sp,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+            ),
+          )
+        ]),
       ),
     );
   }
