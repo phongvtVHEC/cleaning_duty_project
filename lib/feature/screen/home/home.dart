@@ -66,6 +66,7 @@ _buidlBottomSheet(BuildContext context) {
       context.read<HomeBloc>().handleBottomSheetClosed(context);
     },
     toggleVisibilityOnTap: true,
+    canUserSwipe: false,
     draggableBody: false,
     maxHeight: 400.h,
     smoothness: Smoothness.medium,

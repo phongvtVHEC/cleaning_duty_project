@@ -111,14 +111,17 @@ class _SolidBottomSheetState extends State<SolidBottomSheet> {
   }
 
   void _onVerticalDragEnd(data) {
-    _setUsersSmoothness();
+    try {
+      _setUsersSmoothness();
 
-    if (isDragDirectionUp! && widget.controller!.value) {
-      _show();
-    } else if (!isDragDirectionUp! && !widget.controller!.value)
-      _hide();
-    else
-      widget.controller!.value = isDragDirectionUp!;
+      if (isDragDirectionUp! && widget.controller!.value) {
+        _show();
+      } else if (!isDragDirectionUp! && !widget.controller!.value)
+        _hide();
+      else
+        widget.controller!.value = isDragDirectionUp!;
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   void _onTap() {

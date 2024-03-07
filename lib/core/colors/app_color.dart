@@ -23,6 +23,7 @@ abstract class AppColor {
   static const Color colorFFD6D6 = Color(0xFFFFD6D6);
   static const Color colorFFE7E7 = Color(0xFFFFE7E7);
   static const Color colorD60000 = Color(0xFFD60000);
+  static const Color color10275A = Color(0xFF10275A);
 
   //TextField Colors
   static const Color colorTextFieldDisable = Color(0xffEEEEEE);
@@ -38,5 +39,4 @@ abstract class AppColor {
   static const Color colorAppBar = Color(0xFF0D8BFF);
 
   //Background Colors
-  static const Color colorBackground = Color(0xFFF2FBFF);
 }

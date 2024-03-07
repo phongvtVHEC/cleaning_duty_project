@@ -16,47 +16,44 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.sp),
-      child: Stack(
-        children: [
-          IgnorePointer(
-            ignoring: isDisable ?? false,
-            child: InkWell(
-              onTap: onPressedFunction,
-              child: Container(
-                decoration: ShapeDecoration(
-                  color: isDisable ?? false ? Colors.grey : Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+    return Stack(
+      children: [
+        IgnorePointer(
+          ignoring: isDisable ?? false,
+          child: InkWell(
+            onTap: onPressedFunction,
+            child: Container(
+              decoration: ShapeDecoration(
+                color: isDisable ?? false ? Colors.grey : Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15.sp),
-                  child: Center(
-                    child: isDisable ?? false
-                        ? SizedBox(
-                            height: 20.sp,
-                            width: 20.sp,
-                            child: const CircularProgressIndicator(
-                              color: AppColor.colorWhite,
-                            ))
-                        : Text(
-                            buttonText,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
+              ),
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.sp),
+                child: Center(
+                  child: isDisable ?? false
+                      ? SizedBox(
+                          height: 20.sp,
+                          width: 20.sp,
+                          child: const CircularProgressIndicator(
+                            color: AppColor.colorWhite,
+                          ))
+                      : Text(
+                          buttonText,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                  ),
+                        ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -36,75 +36,80 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 100.h),
                   child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'REGISTER',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColor.colorBlack,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          Text(
+                            'REGISTER',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColor.colorBlack,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          'Input the right details to register the right way.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: const Color(0xFF737C96),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(height: 10.h),
+                          Text(
+                            'Input the right details to register the right way.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: const Color(0xFF737C96),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        _buildInitialRegisterUI(context),
-                        CommonButton(
-                          buttonText: 'Register',
-                          onPressedFunction: () {
-                            context.read<RegisterBloc>().handleRegister(
-                                  context,
-                                  context
-                                      .read<RegisterBloc>()
-                                      .usernameController,
-                                  context
-                                      .read<RegisterBloc>()
-                                      .passwordController,
-                                  context.read<RegisterBloc>().emailController,
-                                );
-                          },
-                          isDisable: context.read<RegisterBloc>().isDisable,
-                        ),
-                        SizedBox(height: 20.h),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Already have an account? ',
-                                style: TextStyle(
-                                  color: AppColor.colorFontBlack,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                          _buildInitialRegisterUI(context),
+                          CommonButton(
+                            buttonText: 'Register',
+                            onPressedFunction: () {
+                              context.read<RegisterBloc>().handleRegister(
+                                    context,
+                                    context
+                                        .read<RegisterBloc>()
+                                        .usernameController,
+                                    context
+                                        .read<RegisterBloc>()
+                                        .passwordController,
+                                    context
+                                        .read<RegisterBloc>()
+                                        .emailController,
+                                  );
+                            },
+                            isDisable: context.read<RegisterBloc>().isDisable,
+                          ),
+                          SizedBox(height: 20.h),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Already have an account? ',
+                                  style: TextStyle(
+                                    color: AppColor.colorFontBlack,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    context.pushReplacement(
-                                        ScreenRoute.loginScreen);
-                                  },
-                                text: 'Login',
-                                style: TextStyle(
-                                  color: AppColor.colorBlack,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      context.pushReplacement(
+                                          ScreenRoute.loginScreen);
+                                    },
+                                  text: 'Login',
+                                  style: TextStyle(
+                                    color: AppColor.colorBlack,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 40.h),
-                      ],
+                          SizedBox(height: 40.h),
+                        ],
+                      ),
                     ),
                   ),
                 ),

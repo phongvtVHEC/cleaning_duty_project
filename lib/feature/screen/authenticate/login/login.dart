@@ -119,49 +119,54 @@ class _LoginScreenState extends State<LoginScreen> {
           context.read<LoginBloc>().isDisable = false;
         }
       },
-      child: Column(
-        children: [
-          SizedBox(height: 30.h),
-          CommonTextField(
-            maxLines: 1,
-            label: 'Username',
-            inputController: loginBloc.usernameController,
-            errorText:
-                loginBloc.errorUsername != "" ? loginBloc.errorUsername : null,
-            isDisable: loginBloc.isDisable,
-            onChanged: (value) {
-              ValidateUtil.cleanErrorText(loginBloc.errorUsername);
-              context
-                  .read<LoginBloc>()
-                  .add(CleanErrorFields(field: 'username'));
-            },
-          ),
-          SizedBox(height: 15.h),
-          CommonTextField(
-            maxLines: 1,
-            isPassword: true,
-            label: 'Password',
-            inputController: loginBloc.passwordController,
-            errorText:
-                loginBloc.errorPassword != "" ? loginBloc.errorPassword : null,
-            isDisable: loginBloc.isDisable,
-            onChanged: (value) {
-              ValidateUtil.cleanErrorText(loginBloc.errorUsername);
-              context
-                  .read<LoginBloc>()
-                  .add(CleanErrorFields(field: 'password'));
-            },
-          ),
-          SizedBox(height: 15.h),
-          CommonButton(
-            isDisable: loginBloc.isDisable,
-            buttonText: 'Login',
-            onPressedFunction: () {
-              loginBloc.handleLogin(context, loginBloc.usernameController,
-                  loginBloc.passwordController);
-            },
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            SizedBox(height: 30.h),
+            CommonTextField(
+              maxLines: 1,
+              label: 'Username',
+              inputController: loginBloc.usernameController,
+              errorText: loginBloc.errorUsername != ""
+                  ? loginBloc.errorUsername
+                  : null,
+              isDisable: loginBloc.isDisable,
+              onChanged: (value) {
+                ValidateUtil.cleanErrorText(loginBloc.errorUsername);
+                context
+                    .read<LoginBloc>()
+                    .add(CleanErrorFields(field: 'username'));
+              },
+            ),
+            SizedBox(height: 15.h),
+            CommonTextField(
+              maxLines: 1,
+              isPassword: true,
+              label: 'Password',
+              inputController: loginBloc.passwordController,
+              errorText: loginBloc.errorPassword != ""
+                  ? loginBloc.errorPassword
+                  : null,
+              isDisable: loginBloc.isDisable,
+              onChanged: (value) {
+                ValidateUtil.cleanErrorText(loginBloc.errorUsername);
+                context
+                    .read<LoginBloc>()
+                    .add(CleanErrorFields(field: 'password'));
+              },
+            ),
+            SizedBox(height: 15.h),
+            CommonButton(
+              isDisable: loginBloc.isDisable,
+              buttonText: 'Login',
+              onPressedFunction: () {
+                loginBloc.handleLogin(context, loginBloc.usernameController,
+                    loginBloc.passwordController);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

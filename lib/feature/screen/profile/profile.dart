@@ -23,53 +23,73 @@ class ProfileScreen extends StatelessWidget {
 
             context.pop();
           }),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: 130.w,
-                height: 130.h,
-                decoration: const ShapeDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                  shape: OvalBorder(
-                    side: BorderSide(width: 1, color: AppColor.colorGrey),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: 130.w,
+                  height: 130.h,
+                  decoration: const ShapeDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                    shape: OvalBorder(
+                      side: BorderSide(width: 1, color: AppColor.colorGrey),
+                    ),
                   ),
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Name',
+                      style:
+                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
+                  const CommonTextField(label: "", maxLines: 1),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const Text('Email',
+                      style:
+                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
+                  const CommonTextField(label: "", maxLines: 1),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const Text('Date of Birth',
+                      style:
+                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
+                  CommonDatePicker(),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const Text('Phone number',
+                      style:
+                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
+                  const CommonTextField(label: "", maxLines: 1),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  CommonButton(
+                      buttonText: 'Save changes', onPressedFunction: () {})
+                ],
               ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Name'),
-              const CommonTextField(label: "", maxLines: 1),
-              const Text('Email'),
-              const CommonTextField(label: "", maxLines: 1),
-              const Text('Date of Birth'),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: CommonDatePicker(),
-              ),
-              const Text('Phone number'),
-              const CommonTextField(label: "", maxLines: 1),
-              SizedBox(
-                height: 20.h,
-              ),
-              CommonButton(buttonText: 'Save changes', onPressedFunction: () {})
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

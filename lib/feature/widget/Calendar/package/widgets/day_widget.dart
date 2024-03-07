@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,12 +67,19 @@ class DayWidget extends StatelessWidget {
               right: 0,
               width: 20.sp,
               height: 20.sp,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: activeColor ?? Colors.transparent,
-                  borderRadius: BorderRadius.circular(20),
+              child: Center(
+                child: Container(
+                  decoration: const ShapeDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                    shape: OvalBorder(
+                      side: BorderSide(width: 1, color: AppColor.colorGrey),
+                    ),
+                  ),
                 ),
-                child: Center(),
               ),
             ),
           ),

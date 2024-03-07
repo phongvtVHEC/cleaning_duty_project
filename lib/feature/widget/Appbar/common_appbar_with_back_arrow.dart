@@ -18,7 +18,7 @@ class CommonAppbarWithBackArrow extends StatelessWidget
       height: 90.0.h,
       child: Container(
         alignment: Alignment.center,
-        color: AppColor.colorAppBar,
+        color: AppColor.colorWhite,
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
@@ -30,7 +30,7 @@ class CommonAppbarWithBackArrow extends StatelessWidget
                   IconButton(
                     icon: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: AppColor.colorWhite,
+                      color: AppColor.color10275A,
                       size: 20.sp,
                     ),
                     onPressed: onPressedBackButton,
@@ -42,7 +42,7 @@ class CommonAppbarWithBackArrow extends StatelessWidget
               child: Text(
                 title,
                 style: TextStyle(
-                  color: AppColor.colorWhite,
+                  color: AppColor.color10275A,
                   fontFamily: Constants.app_font_Lato,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
