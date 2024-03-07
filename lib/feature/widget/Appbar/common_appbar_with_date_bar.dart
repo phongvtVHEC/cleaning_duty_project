@@ -33,23 +33,6 @@ class CommonAppbarWithDateBar extends StatelessWidget
             child: Stack(
               children: [
                 Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.dehaze,
-                          color: AppColor.colorWhite,
-                          size: 20.sp,
-                        ),
-                        onPressed: () {
-                          globalKey.currentState!.openDrawer();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Center(
                   child: Text(
                     DateFormat('EEEE, dd MMM').format(DateTime.now()),
                     style: TextStyle(

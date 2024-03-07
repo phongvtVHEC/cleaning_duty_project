@@ -11,9 +11,14 @@ import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/widget/button/common_button.dart';
 import 'package:cleaning_duty_project/feature/widget/textfield/common_text_field.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -31,7 +31,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (!validateFields(emailController.text, usernameController.text,
         passwordController.text, confirmPasswordController.text)) {
       isDisable = false;
-      emit(RegisterFailure());
+      emit(ValidatorDone());
       return;
     }
     try {

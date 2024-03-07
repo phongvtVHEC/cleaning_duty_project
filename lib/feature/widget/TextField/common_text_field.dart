@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonTextField extends StatelessWidget {
-  final String label;
+  final String? label;
   final TextEditingController? inputController;
   final bool? isDisable;
   final bool? isPassword;
@@ -25,7 +25,7 @@ class CommonTextField extends StatelessWidget {
 
   const CommonTextField({
     Key? key,
-    required this.label,
+    this.label,
     this.inputController,
     this.isDisable,
     this.textFieldColor,

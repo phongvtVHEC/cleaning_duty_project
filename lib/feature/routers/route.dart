@@ -2,7 +2,6 @@ import 'package:cleaning_duty_project/core/networks/network_client.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
-import 'package:cleaning_duty_project/feature/blocs/home/bottom_sheet/bottom_sheet_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
@@ -11,6 +10,7 @@ import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/register/register.dart';
 import 'package:cleaning_duty_project/feature/screen/home/home.dart';
+import 'package:cleaning_duty_project/feature/screen/profile/profile.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -84,12 +84,19 @@ class AppRouter {
                 ),
               ),
             ),
-            BlocProvider<BottomSheetBloc>(
-                create: (context) => BottomSheetBloc()),
           ],
           child: const HomeScreen(),
         ),
       ),
+      GoRoute(
+        path: ScreenRoute.profileScreen,
+        builder: (context, state) => MultiBlocListener(
+          listeners: [
+            BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
+          ],
+          child: const ProfileScreen(),
+        ),
+      )
     ],
   );
   static GoRouter get router => _router;

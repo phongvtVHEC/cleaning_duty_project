@@ -10,6 +10,8 @@ class RegisterSuccess extends RegisterState {}
 
 class RegisterFailure extends RegisterState {}
 
+class ValidatorDone extends RegisterState {}
+
 class CleanErrorEmailSuccess extends RegisterState {}
 
 class CleanErrorPasswordSuccess extends RegisterState {}

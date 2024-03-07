@@ -24,6 +24,9 @@ class RegisterScreen extends StatelessWidget {
     if (registerState is RegisterFailure) {
       ToastUtil.showErrorMessage('Register failure');
     }
+    if (registerState is ValidatorDone) {
+      context.read<RegisterBloc>().isDisable = false;
+    }
     return Scaffold(
       body: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {

@@ -32,42 +32,50 @@ class DayWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: day!.value == 0 ? null : onTap as void Function()?,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: isSelected
-                ? const Color(0xFF0D8BFF)
-                : (backgroundColor ?? Colors.transparent),
-          ),
-        ),
-        padding: const EdgeInsets.all(8),
-        child: Stack(children: [
-          Text(
-            day!.label,
-            textAlign: TextAlign.center,
-            style:
-                (isCurrentDay && isCurrentMonth && isCurrentYear) && !isSelected
-                    ? (style!.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor: const Color(0xFFFFC700),
-                        decorationThickness: 2.0,
-                      ))
-                    : style,
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: isSelected
+                    ? const Color(0xFF0D8BFF)
+                    : (backgroundColor ?? Colors.transparent),
+              ),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              day!.label,
+              textAlign: TextAlign.center,
+              style: (isCurrentDay && isCurrentMonth && isCurrentYear) &&
+                      !isSelected
+                  ? (style!.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0xFFFFC700),
+                      decorationThickness: 2.0,
+                    ))
+                  : style,
+            ),
           ),
           Visibility(
             visible: day!.isWeekend == false && day!.value != 0,
-            child: Container(
-              width: 10.sp,
-              height: 10.sp,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
+            child: Positioned(
+              bottom: 0,
+              right: 0,
+              width: 20.sp,
+              height: 20.sp,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: activeColor ?? Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(),
               ),
             ),
-          )
-        ]),
+          ),
+        ],
       ),
     );
   }
