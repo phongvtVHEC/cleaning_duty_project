@@ -69,6 +69,7 @@ class RegisterScreen extends StatelessWidget {
                                   context.read<RegisterBloc>().emailController,
                                 );
                           },
+                          isDisable: context.read<RegisterBloc>().isDisable,
                         ),
                         SizedBox(height: 20.h),
                         Text.rich(
@@ -128,6 +129,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
           ValidateUtil.cleanErrorText(context.read<RegisterBloc>().errorEmail);
           context.read<RegisterBloc>().add(CleanErrorField(field: 'email'));
         },
+        isDisable: context.read<RegisterBloc>().isDisable,
       ),
       SizedBox(height: 15.h),
       CommonTextField(
@@ -142,6 +144,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
               context.read<RegisterBloc>().usernameController.text);
           context.read<RegisterBloc>().add(CleanErrorField(field: 'username'));
         },
+        isDisable: context.read<RegisterBloc>().isDisable,
       ),
       SizedBox(height: 15.h),
       CommonTextField(
@@ -157,6 +160,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
               context.read<RegisterBloc>().passwordController.text);
           context.read<RegisterBloc>().add(CleanErrorField(field: 'password'));
         },
+        isDisable: context.read<RegisterBloc>().isDisable,
       ),
       SizedBox(height: 15.h),
       CommonTextField(
@@ -174,6 +178,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
               .read<RegisterBloc>()
               .add(CleanErrorField(field: 'passwordConfirm'));
         },
+        isDisable: context.read<RegisterBloc>().isDisable,
       ),
       SizedBox(height: 20.h),
     ],

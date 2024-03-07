@@ -17,6 +17,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   String errorPassword = '';
   String errorPasswordConfirm = '';
   String errorUsername = '';
+  bool isDisable = false;
 
   RegisterBloc(this.authenticationRepository) : super(RegisterInitial()) {
     on<RegisterStarted>(_onRegisterStarted);
@@ -26,8 +27,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   void _onRegisterStarted(
       RegisterStarted event, Emitter<RegisterState> emit) async {
     emit(RegisterProgress());
+    isDisable = true;
     if (!validateFields(emailController.text, usernameController.text,
         passwordController.text, confirmPasswordController.text)) {
+      isDisable = false;
       emit(RegisterFailure());
       return;
     }
@@ -35,8 +38,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       var response =
           await authenticationRepository.register(event.registerRequest);
       if (response.data != null) {
+        isDisable = false;
         emit(RegisterSuccess());
       } else {
+        isDisable = false;
         emit(RegisterFailure());
       }
     } catch (e) {
