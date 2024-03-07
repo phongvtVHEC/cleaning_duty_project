@@ -23,12 +23,24 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<CleanErrorField>(_cleanErrorField);
   }
 
-  void _onRegisterStarted(RegisterStarted event, Emitter<RegisterState> emit) {
+  void _onRegisterStarted(
+      RegisterStarted event, Emitter<RegisterState> emit) async {
     emit(RegisterProgress());
-    if (!validateFields(emailController.text, passwordController.text,
-        confirmPasswordController.text, usernameController.text)) {
+    if (!validateFields(emailController.text, usernameController.text,
+        passwordController.text, confirmPasswordController.text)) {
       emit(RegisterFailure());
       return;
+    }
+    try {
+      var response =
+          await authenticationRepository.register(event.registerRequest);
+      if (response.data != null) {
+        emit(RegisterSuccess());
+      } else {
+        emit(RegisterFailure());
+      }
+    } catch (e) {
+      emit(RegisterFailure());
     }
   }
 

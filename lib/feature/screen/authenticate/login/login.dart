@@ -50,6 +50,7 @@ class LoginScreen extends StatelessWidget {
                           ],
                         ),
                         _buildLoginWidget(context),
+                        SizedBox(height: 20.h),
                         SizedBox(
                           height: 20.h,
                           child: Text.rich(
@@ -118,7 +119,7 @@ class LoginScreen extends StatelessWidget {
             inputController: loginBloc.usernameController,
             isDisable: loginBloc.isDisable,
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 15.h),
           CommonTextField(
             maxLines: 1,
             isPassword: true,
@@ -126,7 +127,7 @@ class LoginScreen extends StatelessWidget {
             inputController: loginBloc.passwordController,
             isDisable: loginBloc.isDisable,
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 15.h),
           CommonButton(
             isDisable: loginBloc.isDisable,
             buttonText: 'Login',

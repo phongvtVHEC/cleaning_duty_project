@@ -45,18 +45,18 @@ class CommonTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 335.w,
-          height: 95.h,
-          child: Stack(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.sp),
+      child: Column(
+        children: [
+          Stack(
             children: [
               IgnorePointer(
                 ignoring: isDisable ?? false,
                 child: Column(
                   children: [
                     TextFormField(
+                      cursorColor: AppColor.colorTextFieldLabel,
                       keyboardType: (keyboardType != null && keyboardType != '')
                           ? keyboardType
                           : TextInputType.multiline,
@@ -142,8 +142,8 @@ class CommonTextField extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

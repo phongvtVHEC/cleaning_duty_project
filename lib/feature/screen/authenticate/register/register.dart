@@ -1,4 +1,5 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
+import 'package:cleaning_duty_project/core/utils/toast_ulti.dart';
 import 'package:cleaning_duty_project/core/utils/validation_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
@@ -15,6 +16,14 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var registerState = context.watch<RegisterBloc>().state;
+    if (registerState is RegisterSuccess) {
+      ToastUtil.showSuccessMessage('Register success');
+      context.pushReplacement(ScreenRoute.homeScreen);
+    }
+    if (registerState is RegisterFailure) {
+      ToastUtil.showErrorMessage('Register failure');
+    }
     return Scaffold(
       body: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
@@ -120,7 +129,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
           context.read<RegisterBloc>().add(CleanErrorField(field: 'email'));
         },
       ),
-      SizedBox(height: 20.h),
+      SizedBox(height: 15.h),
       CommonTextField(
         maxLines: 1,
         label: 'Username',
@@ -134,7 +143,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
           context.read<RegisterBloc>().add(CleanErrorField(field: 'username'));
         },
       ),
-      SizedBox(height: 20.h),
+      SizedBox(height: 15.h),
       CommonTextField(
         isPassword: true,
         maxLines: 1,
@@ -149,7 +158,7 @@ Widget _buildInitialRegisterUI(BuildContext context) {
           context.read<RegisterBloc>().add(CleanErrorField(field: 'password'));
         },
       ),
-      SizedBox(height: 20.h),
+      SizedBox(height: 15.h),
       CommonTextField(
         maxLines: 1,
         isPassword: true,
