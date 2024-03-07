@@ -7,3 +7,9 @@ class LoginStarted extends LoginEvent {
 
   LoginStarted({required this.loginRequest});
 }
+
+class CleanErrorFields extends LoginEvent {
+  final String field;
+
+  CleanErrorFields({required this.field});
+}

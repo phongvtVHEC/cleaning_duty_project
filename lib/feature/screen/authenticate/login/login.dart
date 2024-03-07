@@ -1,4 +1,5 @@
 import 'package:cleaning_duty_project/core/utils/toast_ulti.dart';
+import 'package:cleaning_duty_project/core/utils/validation_ulti.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,6 +110,9 @@ class LoginScreen extends StatelessWidget {
           context.read<LoginBloc>().isDisable = false;
           ToastUtil.showErrorMessage("Login Failed");
         }
+        if (state is ValidatorDone) {
+          context.read<LoginBloc>().isDisable = false;
+        }
       },
       child: Column(
         children: [
@@ -117,7 +121,15 @@ class LoginScreen extends StatelessWidget {
             maxLines: 1,
             label: 'Username',
             inputController: loginBloc.usernameController,
+            errorText:
+                loginBloc.errorUsername != "" ? loginBloc.errorUsername : null,
             isDisable: loginBloc.isDisable,
+            onChanged: (value) {
+              ValidateUtil.cleanErrorText(loginBloc.errorUsername);
+              context
+                  .read<LoginBloc>()
+                  .add(CleanErrorFields(field: 'username'));
+            },
           ),
           SizedBox(height: 15.h),
           CommonTextField(
@@ -125,7 +137,15 @@ class LoginScreen extends StatelessWidget {
             isPassword: true,
             label: 'Password',
             inputController: loginBloc.passwordController,
+            errorText:
+                loginBloc.errorPassword != "" ? loginBloc.errorPassword : null,
             isDisable: loginBloc.isDisable,
+            onChanged: (value) {
+              ValidateUtil.cleanErrorText(loginBloc.errorUsername);
+              context
+                  .read<LoginBloc>()
+                  .add(CleanErrorFields(field: 'password'));
+            },
           ),
           SizedBox(height: 15.h),
           CommonButton(
