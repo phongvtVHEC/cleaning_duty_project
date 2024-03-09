@@ -22,7 +22,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   intl: ^0.18.1
   rxdart: ^0.26.0
-  
+  multi_image_picker_plus: ^0.0.4
+  photo_manager: ^3.0.0
+  image_picker: ^1.0.7
   
   
 

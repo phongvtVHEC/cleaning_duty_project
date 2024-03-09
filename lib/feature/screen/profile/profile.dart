@@ -1,4 +1,5 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
+import 'package:cleaning_duty_project/core/utils/pick_image_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/Appbar/common_appbar_with_back_arrow.dart';
 import 'package:cleaning_duty_project/feature/widget/Button/common_button.dart';
@@ -33,20 +34,39 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: 130.w,
-                  height: 130.h,
-                  decoration: const ShapeDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                    shape: OvalBorder(
-                      side: BorderSide(width: 1, color: AppColor.colorGrey),
-                    ),
-                  ),
+                GestureDetector(
+                  onTap: () async {
+                    PickImageUlti.pickImage();
+                  },
+                  child: Container(
+                      alignment: Alignment.center,
+                      width: 130.w,
+                      height: 130.h,
+                      decoration: const ShapeDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: OvalBorder(
+                          side:
+                              BorderSide(width: 1, color: AppColor.color10275A),
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 10.w),
+                          child: const Align(
+                            alignment: Alignment.bottomRight,
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: AppColor.color10275A,
+                            ),
+                          ),
+                        ),
+                      )),
                 ),
               ],
             ),
@@ -72,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
                   const Text('Date of Birth',
                       style:
                           TextStyle(fontSize: 14, color: AppColor.color10275A)),
-                  CommonDatePicker(),
+                  const CommonDatePicker(),
                   SizedBox(
                     height: 20.h,
                   ),

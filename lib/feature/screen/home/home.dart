@@ -126,9 +126,6 @@ _buidlBottomSheet(BuildContext context) {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 20.h,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
