@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CommonDatePicker extends StatefulWidget {
-  const CommonDatePicker({Key? key}) : super(key: key);
+  final ValueChanged<String?>? onDateSelected;
+  final String? selectedDate;
+  const CommonDatePicker({Key? key, this.onDateSelected, this.selectedDate})
+      : super(key: key);
 
   @override
   State<CommonDatePicker> createState() => _CommonDatePickerState();
@@ -15,13 +18,16 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime(DateTime.now().year + 1),
+      initialDate: widget.selectedDate != null
+          ? DateFormat("d/M/yyyy").parse(widget.selectedDate!)
+          : DateTime.now(),
       firstDate: DateTime(1910),
       lastDate: DateTime(DateTime.now().year + 1),
     );
     if (pickedDate != null) {
       setState(() {
-        _selectedDate = DateFormat.yMMMMd("en_US").format(pickedDate);
+        _selectedDate = DateFormat("d/M/yyyy").format(pickedDate);
+        widget.onDateSelected?.call(_selectedDate);
       });
     }
   }
@@ -49,7 +55,7 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                _selectedDate,
+                widget.selectedDate ?? '',
                 textAlign: TextAlign.start,
               ),
               IconButton(

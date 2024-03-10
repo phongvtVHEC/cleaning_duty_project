@@ -5,6 +5,7 @@ class ProfileResponse {
   String? dateOfBirth;
   String? email;
   String? avatarUrl;
+  String? phoneNumber;
   String? createdAt;
   String? updatedAt;
 
@@ -14,6 +15,7 @@ class ProfileResponse {
       this.name,
       this.dateOfBirth,
       this.email,
+      this.phoneNumber,
       this.avatarUrl,
       this.createdAt,
       this.updatedAt});
@@ -24,6 +26,7 @@ class ProfileResponse {
     name = json['name'];
     dateOfBirth = json['date_of_birth'];
     email = json['email'];
+    phoneNumber = json['phone_number'];
     avatarUrl = json['avatar_url'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -36,6 +39,7 @@ class ProfileResponse {
     data['name'] = name;
     data['date_of_birth'] = dateOfBirth;
     data['email'] = email;
+    data['phone_number'] = phoneNumber;
     data['avatar_url'] = avatarUrl;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;

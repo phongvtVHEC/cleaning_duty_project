@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/utils/pick_image_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
@@ -36,114 +35,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
             context.read<HomeBloc>().add(HomeEvent());
             context.pop();
           }),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          final profileBloc = context.read<ProfileBloc>();
+          final image = profileBloc.image;
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () async {
-                    String newImage = await PickImageUlti.pickImage();
-                    setState(() {
-                      context.read<ProfileBloc>().image = newImage;
-                    });
-                  },
-                  child: BlocBuilder<ProfileBloc, ProfileState>(
-                    builder: (context, state) {
-                      return Container(
-                          alignment: Alignment.center,
-                          width: 130.w,
-                          height: 130.h,
-                          decoration: context
-                                  .read<ProfileBloc>()
-                                  .image
-                                  .startsWith('http')
-                              ? ShapeDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        context.read<ProfileBloc>().image),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  shape: const OvalBorder(
-                                    side: BorderSide(
-                                        width: 1, color: AppColor.color10275A),
-                                  ),
-                                )
-                              : ShapeDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(File(
-                                        context.read<ProfileBloc>().image)),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  shape: const OvalBorder(
-                                    side: BorderSide(
-                                        width: 1, color: AppColor.color10275A),
-                                  ),
-                                ),
-                          child: SizedBox(
-                            height: double.infinity,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 10.w),
-                              child: const Align(
-                                alignment: Alignment.bottomRight,
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: AppColor.color10275A,
-                                ),
-                              ),
+                SizedBox(height: 20.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        String newImage;
+                        try {
+                          newImage = await PickImageUlti.pickImage();
+                        } catch (e) {
+                          return;
+                        }
+
+                        setState(() {
+                          profileBloc.image = newImage;
+                        });
+                      },
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            width: 130.w,
+                            height: 130.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  width: 1, color: AppColor.color10275A),
+                              color: image.isEmpty ? Colors.grey : null,
+                              image:
+                                  image.isNotEmpty && image.startsWith('http')
+                                      ? DecorationImage(
+                                          image: NetworkImage(image),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
                             ),
-                          ));
-                    },
+                            child: image.isEmpty
+                                ? const Icon(Icons.person, color: Colors.white)
+                                : image.isEmpty || image.startsWith('http')
+                                    ? null
+                                    : const Center(
+                                        child: Text(
+                                          'Local Image', // You can display a text for local image
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.w),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: AppColor.color10275A,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontSize: 14, color: AppColor.color10275A),
+                      ),
+                      CommonTextField(
+                        maxLines: 1,
+                        inputController: profileBloc.nameController,
+                      ),
+                      SizedBox(height: 20.h),
+                      const Text(
+                        'Email',
+                        style: TextStyle(
+                            fontSize: 14, color: AppColor.color10275A),
+                      ),
+                      CommonTextField(
+                        maxLines: 1,
+                        inputController: profileBloc.emailController,
+                      ),
+                      SizedBox(height: 20.h),
+                      const Text(
+                        'Date of Birth',
+                        style: TextStyle(
+                            fontSize: 14, color: AppColor.color10275A),
+                      ),
+                      CommonDatePicker(
+                        selectedDate: context.read<ProfileBloc>().dateOfBirth,
+                        onDateSelected: (value) {
+                          setState(() {
+                            context.read<ProfileBloc>().dateOfBirth =
+                                value ?? '';
+                          });
+                        },
+                      ),
+                      SizedBox(height: 20.h),
+                      const Text(
+                        'Phone number',
+                        style: TextStyle(
+                            fontSize: 14, color: AppColor.color10275A),
+                      ),
+                      CommonTextField(
+                        maxLines: 1,
+                        inputController: profileBloc.phoneController,
+                      ),
+                      SizedBox(height: 30.h),
+                      CommonButton(
+                        buttonText: 'Save changes',
+                        onPressedFunction: () {},
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Name',
-                      style:
-                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
-                  const CommonTextField(label: "", maxLines: 1),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  const Text('Email',
-                      style:
-                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
-                  const CommonTextField(label: "", maxLines: 1),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  const Text('Date of Birth',
-                      style:
-                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
-                  const CommonDatePicker(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  const Text('Phone number',
-                      style:
-                          TextStyle(fontSize: 14, color: AppColor.color10275A)),
-                  const CommonTextField(label: "", maxLines: 1),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  CommonButton(
-                      buttonText: 'Save changes', onPressedFunction: () {})
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
