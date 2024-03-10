@@ -1,8 +1,10 @@
 part of 'profile_bloc.dart';
 
-class ProfileState {}
+sealed class ProfileState {}
 
 final class ProfileInitial extends ProfileState {}
+
+final class GetProfileProgress extends ProfileState {}
 
 final class GetProfileSuccess extends ProfileState {}
 

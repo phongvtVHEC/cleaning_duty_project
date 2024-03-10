@@ -8,8 +8,6 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final ProfileRepositoryImpl profileRepositoryImpl;
-
   String tempImage = "";
   String image = "";
   TextEditingController nameController = TextEditingController();
@@ -21,13 +19,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(
     this.profileRepositoryImpl,
   ) : super(ProfileInitial()) {
-    on<ProfileEvent>(_onInitialProfile);
+    on<ProfileStarted>(_onInitialProfile);
     on<AvatarChanged>(_onChangeAvatar);
     on<ProfileChanged>(_onChangeProfile);
   }
+  final ProfileRepositoryImpl profileRepositoryImpl;
 
   void _onInitialProfile(ProfileEvent event, Emitter<ProfileState> emit) async {
-    emit(ProfileInitial());
+    emit(GetProfileProgress());
     try {
       final profileResponse = await profileRepositoryImpl.getProfile();
       image = profileResponse.data?.avatarUrl ?? '';
@@ -44,7 +43,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   void _onChangeAvatar(AvatarChanged event, Emitter<ProfileState> emit) async {
     emit(UpdateAvatarProgress());
-    image = await ImageToBase64Util.imageFileToBase64(image);
     try {
       var response = await profileRepositoryImpl.updateAvatar(image);
       if (response.data != null) {
@@ -58,20 +56,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
+  void updateAvatar(String newImage) async {
+    image = await ImageToBase64Util.imageFileToBase64(newImage);
+    add(AvatarChanged(image: image));
+  }
+
   void _onChangeProfile(
       ProfileChanged event, Emitter<ProfileState> emit) async {
     emit(UpdateProfileProgress());
+
     isDisable = true;
-    var profileRequest = ProfileRequest(
-      name: nameController.text,
-      email: emailController.text,
-      phoneNumber: phoneController.text,
-      dateOfBirth: dateOfBirth,
-    );
     try {
-      var response = await profileRepositoryImpl.updateProfile(profileRequest);
+      var response =
+          await profileRepositoryImpl.updateProfile(event.profileRequest);
       if (response.data != null) {
         isDisable = false;
+        nameController.text = event.profileRequest.name ?? '';
+        emailController.text = event.profileRequest.email ?? '';
+        phoneController.text = event.profileRequest.phoneNumber ?? '';
+        dateOfBirth = event.profileRequest.dateOfBirth ?? '';
         emit(UpdateProfileSuccess());
       } else {
         isDisable = false;
@@ -81,5 +84,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       isDisable = false;
       emit(UpdateProfileFail());
     }
+  }
+
+  void updateProfile() {
+    add(
+      ProfileChanged(
+        profileRequest: ProfileRequest(
+          name: nameController.text,
+          email: emailController.text,
+          phoneNumber: phoneController.text,
+          dateOfBirth: dateOfBirth,
+        ),
+      ),
+    );
   }
 }

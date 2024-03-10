@@ -6,12 +6,12 @@ class ProfileResponse {
 
   ProfileResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -45,13 +45,13 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['name'] = this.name;
-    data['date_of_birth'] = this.dateOfBirth;
-    data['email'] = this.email;
-    data['phone_number'] = this.phoneNumber;
-    data['avatar_url'] = this.avatarUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['username'] = username;
+    data['name'] = name;
+    data['date_of_birth'] = dateOfBirth;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['avatar_url'] = avatarUrl;
     return data;
   }
 }
