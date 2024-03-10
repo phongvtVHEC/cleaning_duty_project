@@ -1,5 +1,6 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
-import 'package:cleaning_duty_project/core/utils/pick_image_ulti.dart';
+import 'package:cleaning_duty_project/core/utils/pick_image_util.dart';
+import 'package:cleaning_duty_project/core/utils/toast_util.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/Appbar/common_appbar_with_back_arrow.dart';
@@ -27,6 +28,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var profileState = context.watch<ProfileBloc>().state;
+    if (profileState is GetProfileFail) {
+      context.pop();
+      ToastUtil.showErrorMessage("Get profile fail");
+    }
+    if (profileState is UpdateAvatarFail) {
+      ToastUtil.showErrorMessage("Update avatar fail");
+      context.read<ProfileBloc>().image = context.read<ProfileBloc>().tempImage;
+    }
     return Scaffold(
       backgroundColor: AppColor.colorWhite,
       appBar: CommonAppbarWithBackArrow(
@@ -52,7 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () async {
                         String newImage;
                         try {
-                          newImage = await PickImageUlti.pickImage();
+                          newImage = await PickImageUtil.pickImage();
+                          profileBloc.add(AvatarChanged());
                         } catch (e) {
                           return;
                         }

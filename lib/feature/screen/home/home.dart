@@ -1,6 +1,6 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
-import 'package:cleaning_duty_project/core/utils/toast_ulti.dart';
+import 'package:cleaning_duty_project/core/utils/toast_util.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';

@@ -13,3 +13,9 @@ final class GetProfileFail extends ProfileState {
   final String message;
   GetProfileFail(this.message);
 }
+
+final class UpdateAvatarProgress extends ProfileState {}
+
+final class UpdateAvatarSuccess extends ProfileState {}
+
+final class UpdateAvatarFail extends ProfileState {}

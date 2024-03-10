@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
-class PickImageUlti {
+class PickImageUtil {
   static Future<dynamic> pickImage() async {
     if (Platform.isIOS) {
       List<Asset> images = List.empty();
