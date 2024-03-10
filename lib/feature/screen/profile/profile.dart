@@ -141,27 +141,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           const Text(
             'Name',
-            style: TextStyle(fontSize: 14, color: AppColor.color10275A),
+            style: TextStyle(fontSize: 14, color: AppColor.color8A8BB3),
           ),
           CommonTextField(
+            textColor: AppColor.color10275A,
             maxLines: 1,
             inputController: profileBloc.nameController,
           ),
           SizedBox(height: 20.h),
           const Text(
             'Email',
-            style: TextStyle(fontSize: 14, color: AppColor.color10275A),
+            style: TextStyle(fontSize: 14, color: AppColor.color8A8BB3),
           ),
           CommonTextField(
+            textColor: AppColor.color10275A,
             maxLines: 1,
             inputController: profileBloc.emailController,
           ),
           SizedBox(height: 20.h),
           const Text(
             'Date of Birth',
-            style: TextStyle(fontSize: 14, color: AppColor.color10275A),
+            style: TextStyle(fontSize: 14, color: AppColor.color8A8BB3),
           ),
           CommonDatePicker(
+            iconColor: AppColor.color10275A,
+            textColor: AppColor.color10275A,
             selectedDate: context.read<ProfileBloc>().dateOfBirth,
             onDateSelected: (value) {
               setState(() {
@@ -172,9 +176,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 20.h),
           const Text(
             'Phone number',
-            style: TextStyle(fontSize: 14, color: AppColor.color10275A),
+            style: TextStyle(fontSize: 14, color: AppColor.color8A8BB3),
           ),
           CommonTextField(
+            textColor: AppColor.color10275A,
             maxLines: 1,
             inputController: profileBloc.phoneController,
           ),

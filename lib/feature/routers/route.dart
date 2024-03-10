@@ -12,6 +12,7 @@ import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/register/register.dart';
+import 'package:cleaning_duty_project/feature/screen/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/screen/home/home.dart';
 import 'package:cleaning_duty_project/feature/screen/profile/profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +94,10 @@ class AppRouter {
           ],
           child: const ProfileScreen(),
         ),
-      )
+      ),
+      GoRoute(
+          path: ScreenRoute.cleanningDutyScreen,
+          builder: (context, state) => const CleanningDuty()),
     ],
   );
   static GoRouter get router => _router;

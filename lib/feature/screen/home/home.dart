@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -129,73 +130,30 @@ _buidlBottomSheet(BuildContext context) {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<HomeBloc>().resetState(context);
-                        context.push(ScreenRoute.profileScreen);
-                      },
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 40.sp,
-                      ),
-                    ),
-                    Text(
-                      'Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constants.app_font_Lato,
-                      ),
-                    ),
-                  ],
+                _buildIconButton(
+                  OMIcons.person,
+                  AppColor.colorE06D06,
+                  'Profile',
+                  () {
+                    context.read<HomeBloc>().resetState(context);
+                    context.push(ScreenRoute.profileScreen);
+                  },
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.person_add,
-                        color: Colors.white,
-                        size: 40.sp,
-                      ),
-                    ),
-                    Text(
-                      'Add member',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constants.app_font_Lato,
-                      ),
-                    ),
-                  ],
+                _buildIconButton(
+                  OMIcons.personAdd,
+                  AppColor.color219653,
+                  'Add Duty',
+                  () {
+                    context.push(ScreenRoute.cleanningDutyScreen);
+                  },
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<LogoutBloc>().handleLogout(context);
-                      },
-                      icon: Icon(
-                        Icons.logout_outlined,
-                        color: Colors.white,
-                        size: 40.sp,
-                      ),
-                    ),
-                    Text(
-                      'Logout',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: Constants.app_font_Lato,
-                      ),
-                    ),
-                  ],
+                _buildIconButton(
+                  Icons.logout_outlined,
+                  AppColor.colorEB5757,
+                  'Logout',
+                  () {
+                    context.read<LogoutBloc>().handleLogout(context);
+                  },
                 ),
               ],
             ),
@@ -203,5 +161,50 @@ _buidlBottomSheet(BuildContext context) {
         ),
       ),
     ),
+  );
+}
+
+Widget _buildIconButton(
+  IconData icon,
+  Color color,
+  String text,
+  VoidCallback onPressed,
+) {
+  return Column(
+    children: [
+      Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            decoration: ShapeDecoration(
+              color: AppColor.colorWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: onPressed,
+            icon: Icon(
+              icon,
+              size: 40.sp,
+              color: color,
+              weight: 100,
+            ),
+          ),
+        ],
+      ),
+      Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15.sp,
+          fontWeight: FontWeight.w700,
+          fontFamily: Constants.app_font_Lato,
+        ),
+      ),
+    ],
   );
 }

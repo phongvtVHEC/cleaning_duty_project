@@ -24,7 +24,11 @@ abstract class AppColor {
   static const Color colorFFE7E7 = Color(0xFFFFE7E7);
   static const Color colorD60000 = Color(0xFFD60000);
   static const Color color10275A = Color(0xFF10275A);
-
+  static const Color colorE06D06 = Color(0xFFE06D06);
+  static const Color color219653 = Color(0xFF219653);
+  static const Color color9B51E0 = Color(0xFF9B51E0);
+  static const Color colorEB5757 = Color(0xFFEB5757);
+  static const Color color8A8BB3 = Color(0xFF8A8BB3);
   //TextField Colors
   static const Color colorTextFieldDisable = Color(0xffEEEEEE);
   static const Color colorTextFieldBorder = Color(0xFFEBF2FD);

@@ -1,11 +1,19 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class CommonDatePicker extends StatefulWidget {
   final ValueChanged<String?>? onDateSelected;
   final String? selectedDate;
-  const CommonDatePicker({Key? key, this.onDateSelected, this.selectedDate})
+  final Color? textColor;
+  final Color? iconColor;
+  const CommonDatePicker(
+      {Key? key,
+      this.onDateSelected,
+      this.selectedDate,
+      this.textColor,
+      this.iconColor})
       : super(key: key);
 
   @override
@@ -57,9 +65,16 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
               Text(
                 widget.selectedDate ?? '',
                 textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: widget.textColor ?? AppColor.colorBlack,
+                  fontSize: 14.sp,
+                ),
               ),
               IconButton(
-                icon: const Icon(Icons.calendar_today),
+                icon: Icon(
+                  Icons.calendar_today,
+                  color: widget.iconColor ?? AppColor.colorBlack,
+                ),
                 tooltip: 'Tap to open date picker',
                 onPressed: () {
                   _selectDate(context);

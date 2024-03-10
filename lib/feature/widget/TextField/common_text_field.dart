@@ -11,6 +11,7 @@ class CommonTextField extends StatelessWidget {
   final bool? isDisable;
   final bool? isPassword;
   final Color? textFieldColor;
+  final Color? textColor;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final void Function()? onEditingComplete;
@@ -41,6 +42,7 @@ class CommonTextField extends StatelessWidget {
     this.hintText,
     this.hintStyle,
     this.errorText,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,11 @@ class CommonTextField extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
+                    style: TextStyle(
+                      color: textColor ?? Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                     cursorColor: AppColor.colorTextFieldLabel,
                     keyboardType: (keyboardType != null && keyboardType != '')
                         ? keyboardType
