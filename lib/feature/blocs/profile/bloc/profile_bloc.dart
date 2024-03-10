@@ -1,8 +1,8 @@
 import 'package:cleaning_duty_project/core/utils/image_to_base64_util.dart';
 import 'package:cleaning_duty_project/feature/data/db/local_client.dart';
+import 'package:cleaning_duty_project/feature/data/entities/request/profile/profile_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cleaning_duty_project/feature/data/entities/response/profile/profile_response.dart';
 import 'package:cleaning_duty_project/feature/data/repository/profile/profile.dart';
 
 part 'profile_event.dart';
@@ -24,6 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) : super(ProfileInitial()) {
     on<ProfileEvent>(_onInitialProfile);
     on<AvatarChanged>(_onChangeAvatar);
+    on<ProfileChanged>(_onChangeProfile);
   }
 
   void _onInitialProfile(ProfileEvent event, Emitter<ProfileState> emit) async {
@@ -32,15 +33,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       var currentUser = localClientImpl.readData('currentUser');
       final profileResponse =
           await profileRepositoryImpl.getProfile(currentUser['id']);
-      image = profileResponse.avatarUrl ?? '';
-      tempImage = profileResponse.avatarUrl ?? '';
-      nameController.text = profileResponse.name ?? '';
-      emailController.text = profileResponse.email ?? '';
-      phoneController.text = profileResponse.phoneNumber ?? '';
-      dateOfBirth = profileResponse.dateOfBirth ?? '';
-      emit(GetProfileSuccess(profileResponse));
+      image = profileResponse.data?.avatarUrl ?? '';
+      tempImage = profileResponse.data?.avatarUrl ?? '';
+      nameController.text = profileResponse.data?.name ?? '';
+      emailController.text = profileResponse.data?.email ?? '';
+      phoneController.text = profileResponse.data?.phoneNumber ?? '';
+      dateOfBirth = profileResponse.data?.dateOfBirth ?? '';
+      emit(GetProfileSuccess());
     } catch (e) {
-      emit(GetProfileFail(e.toString()));
+      emit(GetProfileFail());
     }
   }
 
@@ -53,6 +54,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(UpdateAvatarSuccess());
     } else {
       emit(UpdateAvatarFail());
+    }
+  }
+
+  void _onChangeProfile(
+      ProfileChanged event, Emitter<ProfileState> emit) async {
+    emit(UpdateProfileProgress());
+    var profileRequest = ProfileRequest(
+      name: nameController.text,
+      email: emailController.text,
+      phoneNumber: phoneController.text,
+      dateOfBirth: dateOfBirth,
+    );
+    var response = await profileRepositoryImpl.updateProfile(profileRequest);
+    if (response.data != null) {
+      emit(UpdateProfileSuccess());
+    } else {
+      emit(UpdateProfileFail());
     }
   }
 }

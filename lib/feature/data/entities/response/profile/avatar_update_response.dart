@@ -1,10 +1,10 @@
-class AvatarResponse {
+class AvatarUpdateResponse {
   String? message;
   Data? data;
 
-  AvatarResponse({this.message, this.data});
+  AvatarUpdateResponse({this.message, this.data});
 
-  AvatarResponse.fromJson(Map<String, dynamic> json) {
+  AvatarUpdateResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }

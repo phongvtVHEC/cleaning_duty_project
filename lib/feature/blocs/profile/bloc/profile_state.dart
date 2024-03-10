@@ -4,18 +4,18 @@ class ProfileState {}
 
 final class ProfileInitial extends ProfileState {}
 
-final class GetProfileSuccess extends ProfileState {
-  final ProfileResponse profileResponse;
-  GetProfileSuccess(this.profileResponse);
-}
+final class GetProfileSuccess extends ProfileState {}
 
-final class GetProfileFail extends ProfileState {
-  final String message;
-  GetProfileFail(this.message);
-}
+final class GetProfileFail extends ProfileState {}
 
 final class UpdateAvatarProgress extends ProfileState {}
 
 final class UpdateAvatarSuccess extends ProfileState {}
 
 final class UpdateAvatarFail extends ProfileState {}
+
+final class UpdateProfileProgress extends ProfileState {}
+
+final class UpdateProfileSuccess extends ProfileState {}
+
+final class UpdateProfileFail extends ProfileState {}
