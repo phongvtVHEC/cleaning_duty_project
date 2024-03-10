@@ -5,7 +5,7 @@ import 'package:cleaning_duty_project/feature/data/entities/response/profile/pro
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
 
 abstract class IProfileRepository {
-  Future<ProfileResponse> getProfile(int id);
+  Future<ProfileResponse> getProfile();
   Future<AvatarUpdateResponse> updateAvatar(String avatarBase64);
   Future<ProfileUpdateResponse> updateProfile(ProfileRequest profileRequest);
 }
@@ -16,13 +16,13 @@ class ProfileRepositoryImpl extends IProfileRepository {
     required this.profileNetworkClient,
   });
   @override
-  Future<ProfileResponse> getProfile(int id) async {
-    var response = profileNetworkClient.getProfile(id);
+  Future<ProfileResponse> getProfile() async {
+    var response = profileNetworkClient.getProfile();
     return response;
   }
 
   @override
-  Future<AvatarUpdateResponse> updateAvatar(String avatarBase64) {
+  Future<AvatarUpdateResponse> updateAvatar(String avatarBase64) async {
     var response = profileNetworkClient.updateAvatar(avatarBase64);
     return response;
   }
@@ -31,10 +31,10 @@ class ProfileRepositoryImpl extends IProfileRepository {
   Future<ProfileUpdateResponse> updateProfile(
       ProfileRequest profileRequest) async {
     var response = await profileNetworkClient.updateProfile(
-        profileRequest.name!,
-        profileRequest.email!,
-        profileRequest.phoneNumber!,
-        profileRequest.dateOfBirth!);
+        profileRequest.name ?? '',
+        profileRequest.email ?? '',
+        profileRequest.phoneNumber ?? '',
+        profileRequest.dateOfBirth ?? '');
     return response;
   }
 }

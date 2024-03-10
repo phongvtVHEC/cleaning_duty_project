@@ -1,5 +1,4 @@
 import 'package:cleaning_duty_project/core/utils/image_to_base64_util.dart';
-import 'package:cleaning_duty_project/feature/data/db/local_client.dart';
 import 'package:cleaning_duty_project/feature/data/entities/request/profile/profile_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,17 +9,17 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepositoryImpl profileRepositoryImpl;
-  final LocalClientImpl localClientImpl;
+
   String tempImage = "";
   String image = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   String dateOfBirth = "";
+  bool isDisable = false;
 
   ProfileBloc(
     this.profileRepositoryImpl,
-    this.localClientImpl,
   ) : super(ProfileInitial()) {
     on<ProfileEvent>(_onInitialProfile);
     on<AvatarChanged>(_onChangeAvatar);
@@ -30,9 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onInitialProfile(ProfileEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileInitial());
     try {
-      var currentUser = localClientImpl.readData('currentUser');
-      final profileResponse =
-          await profileRepositoryImpl.getProfile(currentUser['id']);
+      final profileResponse = await profileRepositoryImpl.getProfile();
       image = profileResponse.data?.avatarUrl ?? '';
       tempImage = profileResponse.data?.avatarUrl ?? '';
       nameController.text = profileResponse.data?.name ?? '';
@@ -48,11 +45,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onChangeAvatar(AvatarChanged event, Emitter<ProfileState> emit) async {
     emit(UpdateAvatarProgress());
     image = await ImageToBase64Util.imageFileToBase64(image);
-    var response = await profileRepositoryImpl.updateAvatar(image);
-    if (response.data != null) {
-      image = response.data?.avatarUrl ?? '';
-      emit(UpdateAvatarSuccess());
-    } else {
+    try {
+      var response = await profileRepositoryImpl.updateAvatar(image);
+      if (response.data != null) {
+        image = response.data?.avatarUrl ?? '';
+        emit(UpdateAvatarSuccess());
+      } else {
+        emit(UpdateAvatarFail());
+      }
+    } catch (e) {
       emit(UpdateAvatarFail());
     }
   }
@@ -60,16 +61,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onChangeProfile(
       ProfileChanged event, Emitter<ProfileState> emit) async {
     emit(UpdateProfileProgress());
+    isDisable = true;
     var profileRequest = ProfileRequest(
       name: nameController.text,
       email: emailController.text,
       phoneNumber: phoneController.text,
       dateOfBirth: dateOfBirth,
     );
-    var response = await profileRepositoryImpl.updateProfile(profileRequest);
-    if (response.data != null) {
-      emit(UpdateProfileSuccess());
-    } else {
+    try {
+      var response = await profileRepositoryImpl.updateProfile(profileRequest);
+      if (response.data != null) {
+        isDisable = false;
+        emit(UpdateProfileSuccess());
+      } else {
+        isDisable = false;
+        emit(UpdateProfileFail());
+      }
+    } catch (e) {
+      isDisable = false;
       emit(UpdateProfileFail());
     }
   }

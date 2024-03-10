@@ -37,6 +37,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ToastUtil.showErrorMessage("Update avatar fail");
       context.read<ProfileBloc>().image = context.read<ProfileBloc>().tempImage;
     }
+    if (profileState is UpdateProfileSuccess) {
+      ToastUtil.showSuccessMessage("Update profile success");
+      context.read<ProfileBloc>().add(ProfileEvent());
+    }
+    if (profileState is UpdateProfileFail) {
+      ToastUtil.showErrorMessage("Update profile fail");
+    }
     return Scaffold(
       backgroundColor: AppColor.colorWhite,
       appBar: CommonAppbarWithBackArrow(
@@ -167,8 +174,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(height: 30.h),
                       CommonButton(
+                        isDisable: profileBloc.isDisable,
                         buttonText: 'Save changes',
-                        onPressedFunction: () {},
+                        onPressedFunction: () {
+                          context.read<ProfileBloc>().add(ProfileChanged());
+                        },
                       ),
                     ],
                   ),

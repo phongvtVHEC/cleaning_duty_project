@@ -34,6 +34,7 @@ class NetworkClient {
           break;
         case RequestType.put:
           response = await dio.put(url,
+              queryParameters: queryParameters,
               data: requestBody,
               options:
                   Options(responseType: ResponseType.json, headers: headers));

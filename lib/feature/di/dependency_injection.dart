@@ -27,6 +27,7 @@ void setupLocator() {
   //  Register singleton ProfileNetworkClient With GetIt
   locator.registerSingleton<ProfileNetworkClient>(
     ProfileNetworkClient(
+      localClient: LocalClientImpl(),
       networkClient: networkClient,
     ),
   );

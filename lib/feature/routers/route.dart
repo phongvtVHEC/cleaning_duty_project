@@ -3,7 +3,6 @@ import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/log
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
-import 'package:cleaning_duty_project/feature/data/db/local_client.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
@@ -89,7 +88,6 @@ class AppRouter {
                 ProfileRepositoryImpl(
                   profileNetworkClient: locator<ProfileNetworkClient>(),
                 ),
-                LocalClientImpl(),
               ),
             ),
           ],
