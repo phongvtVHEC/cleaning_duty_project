@@ -14,6 +14,7 @@ class Constants {
   static final String api_register = '$api_base_url/api/auth/register';
   static final String api_refresh_token =
       '$api_base_url/api/auth/refresh-token';
+  static final String api_get_profile = '$api_base_url/api/users';
 
   // Constant String
   static const String access_token = 'access_token';

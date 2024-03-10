@@ -3,9 +3,13 @@ import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/logi
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
+import 'package:cleaning_duty_project/feature/data/db/local_client.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
+import 'package:cleaning_duty_project/feature/data/repository/profile/profile.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/register/register.dart';
@@ -39,8 +43,10 @@ class AppRouter {
           create: (context) => LoginBloc(
             AuthenticationRepositoryImpl(
               authenticateNetworkClient: AuthenticateNetworkClient(
+                localClientImpl: LocalClientImpl(),
                 secureStorage: SecureStorageImpl(),
                 networkClient: NetworkClient(
+                  secureStorageImpl: SecureStorageImpl(),
                   dio: Dio(),
                 ),
               ),
@@ -55,8 +61,10 @@ class AppRouter {
           create: (context) => RegisterBloc(
             AuthenticationRepositoryImpl(
               authenticateNetworkClient: AuthenticateNetworkClient(
+                localClientImpl: LocalClientImpl(),
                 secureStorage: SecureStorageImpl(),
                 networkClient: NetworkClient(
+                  secureStorageImpl: SecureStorageImpl(),
                   dio: Dio(),
                 ),
               ),
@@ -76,8 +84,10 @@ class AppRouter {
               create: (context) => LogoutBloc(
                 AuthenticationRepositoryImpl(
                   authenticateNetworkClient: AuthenticateNetworkClient(
+                    localClientImpl: LocalClientImpl(),
                     secureStorage: SecureStorageImpl(),
                     networkClient: NetworkClient(
+                      secureStorageImpl: SecureStorageImpl(),
                       dio: Dio(),
                     ),
                   ),
@@ -93,6 +103,17 @@ class AppRouter {
         builder: (context, state) => MultiBlocListener(
           listeners: [
             BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
+            BlocProvider<ProfileBloc>(
+                create: (context) => ProfileBloc(
+                      ProfileRepositoryImpl(
+                        profileNetworkClient: ProfileNetworkClient(
+                          NetworkClient(
+                              dio: Dio(),
+                              secureStorageImpl: SecureStorageImpl()),
+                        ),
+                      ),
+                      LocalClientImpl(),
+                    )),
           ],
           child: const ProfileScreen(),
         ),

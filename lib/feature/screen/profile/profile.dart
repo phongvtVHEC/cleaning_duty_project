@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/utils/pick_image_ulti.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/Appbar/common_appbar_with_back_arrow.dart';
 import 'package:cleaning_duty_project/feature/widget/Button/common_button.dart';
 import 'package:cleaning_duty_project/feature/widget/DatePicker/common_date_picker.dart';
@@ -10,8 +12,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileBloc>().add(ProfileEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +34,6 @@ class ProfileScreen extends StatelessWidget {
           title: 'Profile',
           onPressedBackButton: () {
             context.read<HomeBloc>().add(HomeEvent());
-
             context.pop();
           }),
       body: SingleChildScrollView(
@@ -36,37 +48,59 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    PickImageUlti.pickImage();
+                    String newImage = await PickImageUlti.pickImage();
+                    setState(() {
+                      context.read<ProfileBloc>().image = newImage;
+                    });
                   },
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 130.w,
-                      height: 130.h,
-                      decoration: const ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: OvalBorder(
-                          side:
-                              BorderSide(width: 1, color: AppColor.color10275A),
-                        ),
-                      ),
-                      child: SizedBox(
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 10.w),
-                          child: const Align(
-                            alignment: Alignment.bottomRight,
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: AppColor.color10275A,
+                  child: BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      return Container(
+                          alignment: Alignment.center,
+                          width: 130.w,
+                          height: 130.h,
+                          decoration: context
+                                  .read<ProfileBloc>()
+                                  .image
+                                  .startsWith('http')
+                              ? ShapeDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        context.read<ProfileBloc>().image),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  shape: const OvalBorder(
+                                    side: BorderSide(
+                                        width: 1, color: AppColor.color10275A),
+                                  ),
+                                )
+                              : ShapeDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(File(
+                                        context.read<ProfileBloc>().image)),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  shape: const OvalBorder(
+                                    side: BorderSide(
+                                        width: 1, color: AppColor.color10275A),
+                                  ),
+                                ),
+                          child: SizedBox(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10.w),
+                              child: const Align(
+                                alignment: Alignment.bottomRight,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: AppColor.color10275A,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      )),
+                          ));
+                    },
+                  ),
                 ),
               ],
             ),
