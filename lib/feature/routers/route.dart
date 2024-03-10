@@ -1,4 +1,3 @@
-import 'package:cleaning_duty_project/core/networks/network_client.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
@@ -10,12 +9,12 @@ import 'package:cleaning_duty_project/feature/data/remote/authenticate/authentic
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
 import 'package:cleaning_duty_project/feature/data/repository/profile/profile.dart';
+import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/register/register.dart';
 import 'package:cleaning_duty_project/feature/screen/home/home.dart';
 import 'package:cleaning_duty_project/feature/screen/profile/profile.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,14 +41,7 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => LoginBloc(
             AuthenticationRepositoryImpl(
-              authenticateNetworkClient: AuthenticateNetworkClient(
-                localClientImpl: LocalClientImpl(),
-                secureStorage: SecureStorageImpl(),
-                networkClient: NetworkClient(
-                  secureStorageImpl: SecureStorageImpl(),
-                  dio: Dio(),
-                ),
-              ),
+              authenticateNetworkClient: locator<AuthenticateNetworkClient>(),
             ),
           ),
           child: const LoginScreen(),
@@ -58,18 +50,13 @@ class AppRouter {
       GoRoute(
         path: ScreenRoute.registerScreen,
         builder: (context, state) => BlocProvider(
-          create: (context) => RegisterBloc(
-            AuthenticationRepositoryImpl(
-              authenticateNetworkClient: AuthenticateNetworkClient(
-                localClientImpl: LocalClientImpl(),
-                secureStorage: SecureStorageImpl(),
-                networkClient: NetworkClient(
-                  secureStorageImpl: SecureStorageImpl(),
-                  dio: Dio(),
-                ),
+          create: (context) {
+            return RegisterBloc(
+              AuthenticationRepositoryImpl(
+                authenticateNetworkClient: locator<AuthenticateNetworkClient>(),
               ),
-            ),
-          ),
+            );
+          },
           child: const RegisterScreen(),
         ),
       ),
@@ -83,14 +70,8 @@ class AppRouter {
             BlocProvider<LogoutBloc>(
               create: (context) => LogoutBloc(
                 AuthenticationRepositoryImpl(
-                  authenticateNetworkClient: AuthenticateNetworkClient(
-                    localClientImpl: LocalClientImpl(),
-                    secureStorage: SecureStorageImpl(),
-                    networkClient: NetworkClient(
-                      secureStorageImpl: SecureStorageImpl(),
-                      dio: Dio(),
-                    ),
-                  ),
+                  authenticateNetworkClient:
+                      locator<AuthenticateNetworkClient>(),
                 ),
               ),
             ),
@@ -104,16 +85,13 @@ class AppRouter {
           listeners: [
             BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
             BlocProvider<ProfileBloc>(
-                create: (context) => ProfileBloc(
-                      ProfileRepositoryImpl(
-                        profileNetworkClient: ProfileNetworkClient(
-                          NetworkClient(
-                              dio: Dio(),
-                              secureStorageImpl: SecureStorageImpl()),
-                        ),
-                      ),
-                      LocalClientImpl(),
-                    )),
+              create: (context) => ProfileBloc(
+                ProfileRepositoryImpl(
+                  profileNetworkClient: locator<ProfileNetworkClient>(),
+                ),
+                LocalClientImpl(),
+              ),
+            ),
           ],
           child: const ProfileScreen(),
         ),

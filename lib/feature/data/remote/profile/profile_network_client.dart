@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 class ProfileNetworkClient {
   final NetworkClient networkClient;
 
-  ProfileNetworkClient(this.networkClient);
+  ProfileNetworkClient({required this.networkClient});
 
   Future<ProfileResponse> getProfile(int id) async {
     final response = await networkClient.invoke(
