@@ -23,30 +23,44 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final homeBloc = context.read<HomeBloc>();
+
+    print(homeBloc.calendarKey.currentState?.controller
+            .getCurrentMonth()
+            .toString() ??
+        '');
     return Scaffold(
       backgroundColor: AppColor.colorWhite,
       appBar: CommonAppbarWithDateBar(
         globalKey: context.read<HomeBloc>().key,
-        year: '2021',
-        month: 'June',
+        year: homeBloc.getYearString(homeBloc
+                .calendarKey.currentState?.controller
+                .getCurrentMonth()
+                .toString() ??
+            ''),
+        month: homeBloc.getMonthString(homeBloc
+                .calendarKey.currentState?.controller
+                .getCurrentMonth()
+                .toString() ??
+            ''),
         onPressBack: () {
-          context
-              .read<HomeBloc>()
-              .calendarKey
-              .currentState!
-              .onPressBackFunction();
+          homeBloc.calendarKey.currentState!.onPressBackFunction();
         },
         onPressForward: () {
-          context
-              .read<HomeBloc>()
-              .calendarKey
-              .currentState!
-              .onPressForwardFunction();
+          homeBloc.calendarKey.currentState!.onPressForwardFunction();
         },
       ),
       bottomSheet: _buidlBottomSheet(context),
-      body: const CommonCalendar(),
+      body: CommonCalendar(
+        funtionOnTapDate: (p0) {},
+        currentMonth: context.read<HomeBloc>().currentMonth ?? '',
+      ),
     );
   }
 }

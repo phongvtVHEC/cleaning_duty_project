@@ -2,13 +2,18 @@ import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/calendar_page.dart';
+import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonCalendar extends StatelessWidget {
+  final String currentMonth;
+  final void Function(Date?) funtionOnTapDate;
   const CommonCalendar({
     super.key,
+    required this.currentMonth,
+    required this.funtionOnTapDate,
   });
 
   @override
@@ -19,7 +24,7 @@ class CommonCalendar extends StatelessWidget {
       initialDate: DateTime.now(),
       weekendOpacityEnable: true,
       space: 20,
-      onSelected: print,
+      onSelected: funtionOnTapDate,
       backgroundColor: Colors.white,
       activeColor: Colors.orange,
       textStyleDays: TextStyle(
