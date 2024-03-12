@@ -19,6 +19,7 @@ class Calendar extends StatefulWidget {
   final bool disable;
   final ValueChanged<Date?>? onSelected;
   final DateTime? initialDate;
+  String? currentMonth;
   final Widget? previous;
   final Widget? next;
   final double? space;
@@ -43,6 +44,7 @@ class Calendar extends StatefulWidget {
     this.initialDate,
     this.onPressedBack,
     this.onPressedForward,
+    this.currentMonth,
   })  : assert(weekendOpacityEnable == true
             ? textStyleWeekDay!.color != null
             : true),
@@ -80,7 +82,12 @@ class CalendarState extends State<Calendar>
     super.dispose();
   }
 
+  String getCurrentMonthString() {
+    return controller.dataCollection.currentMonth!.month!.month.toString();
+  }
+
   void onPressBackFunction() {
+    widget.currentMonth = getCurrentMonthString();
     pageController.previousPage(
       duration: const Duration(milliseconds: 200),
       curve: Curves.linear,
@@ -88,6 +95,7 @@ class CalendarState extends State<Calendar>
   }
 
   void onPressForwardFunction() {
+    widget.currentMonth = getCurrentMonthString();
     pageController.nextPage(
       duration: const Duration(milliseconds: 200),
       curve: Curves.linear,

@@ -14,6 +14,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   SolidController solidController = SolidController();
   final GlobalKey<ScaffoldState> key = GlobalKey();
   final GlobalKey<CalendarState> calendarKey = GlobalKey();
+  String? currentMonth = '';
 
   void _onHomeStarted(HomeEvent event, Emitter<HomeState> emit) {
     emit(HomeInitial());
@@ -48,5 +49,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onResetState(HomeClose event, Emitter<HomeState> emit) {
     emit(HomeReset());
+  }
+
+  String getMonthString(String dateString) {
+    List<String> parts = dateString.split(' ');
+
+    // Check if the parts array has at least 3 elements
+    if (parts.length < 3) return 'Invalid format';
+
+    // Get the month string, which is the second element after 'de'
+    String monthString = parts[2].toUpperCase();
+
+    // Remove the comma if present
+    monthString = monthString.replaceAll(',', '');
+
+    return monthString;
+  }
+
+  String getYearString(String dateString) {
+    List<String> parts = dateString.split(' ');
+
+    // Check if the parts array has at least 3 elements
+    if (parts.length < 3) return 'Invalid format';
+
+    // Get the year string, which is the third element
+    String yearString = parts[3];
+
+    return yearString;
   }
 }

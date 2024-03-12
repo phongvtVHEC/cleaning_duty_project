@@ -69,7 +69,6 @@ class CalendarPageController {
     subscription = currentPage.stream.listen((event) {
       if (event == 0) {
         //Previous Month
-
         dataCollection = DataCollection.previous(dataCollection.currentMonth!);
 
         Future.delayed(const Duration(milliseconds: 50)).then((value) {
@@ -93,6 +92,10 @@ class CalendarPageController {
   }
 
   void onChage(int value) => currentPage.sink.add(value);
+
+  Date getCurrentMonth() {
+    return dataCollection.currentMonth!;
+  }
 
   void dispose() {
     subscription.cancel();
