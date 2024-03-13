@@ -1,7 +1,6 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/utils/pick_image_util.dart';
 import 'package:cleaning_duty_project/core/utils/toast_util.dart';
-import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/Appbar/common_appbar_with_back_arrow.dart';
 import 'package:cleaning_duty_project/feature/widget/Button/common_button.dart';
@@ -49,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CommonAppbarWithBackArrow(
         title: 'Profile',
         onPressedBackButton: () {
-          context.read<HomeBloc>().add(HomeClose(false));
           context.pop();
         },
       ),

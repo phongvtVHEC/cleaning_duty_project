@@ -82,13 +82,11 @@ class AppRouter {
       GoRoute(
         path: ScreenRoute.profileScreen,
         builder: (context, state) => BlocProvider(
-          create: (context) {
-            return ProfileBloc(
-              ProfileRepositoryImpl(
-                profileNetworkClient: locator<ProfileNetworkClient>(),
-              ),
-            );
-          },
+          create: (context) => ProfileBloc(
+            ProfileRepositoryImpl(
+              profileNetworkClient: locator<ProfileNetworkClient>(),
+            ),
+          ),
           child: const ProfileScreen(),
         ),
       ),

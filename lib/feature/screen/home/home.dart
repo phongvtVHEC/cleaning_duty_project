@@ -154,6 +154,7 @@ _buidlBottomSheet(BuildContext context) {
                   AppColor.color219653,
                   'Add Duty',
                   () {
+                    context.read<HomeBloc>().resetState(context);
                     context.push(ScreenRoute.cleanningDutyScreen);
                   },
                 ),
