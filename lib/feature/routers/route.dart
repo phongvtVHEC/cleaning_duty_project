@@ -81,17 +81,14 @@ class AppRouter {
       ),
       GoRoute(
         path: ScreenRoute.profileScreen,
-        builder: (context, state) => MultiBlocListener(
-          listeners: [
-            BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
-            BlocProvider<ProfileBloc>(
-              create: (context) => ProfileBloc(
-                ProfileRepositoryImpl(
-                  profileNetworkClient: locator<ProfileNetworkClient>(),
-                ),
+        builder: (context, state) => BlocProvider(
+          create: (context) {
+            return ProfileBloc(
+              ProfileRepositoryImpl(
+                profileNetworkClient: locator<ProfileNetworkClient>(),
               ),
-            ),
-          ],
+            );
+          },
           child: const ProfileScreen(),
         ),
       ),

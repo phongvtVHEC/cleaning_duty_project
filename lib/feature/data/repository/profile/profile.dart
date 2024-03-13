@@ -17,7 +17,7 @@ class ProfileRepositoryImpl extends IProfileRepository {
   });
   @override
   Future<ProfileResponse> getProfile() async {
-    var response = profileNetworkClient.getProfile();
+    var response = await profileNetworkClient.getProfile();
     return response;
   }
 
