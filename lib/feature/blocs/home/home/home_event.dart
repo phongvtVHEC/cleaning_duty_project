@@ -2,9 +2,19 @@ part of 'home_bloc.dart';
 
 class HomeEvent {}
 
-class BottomSheetStarted extends HomeEvent {
+class HomeStarted extends HomeEvent {
   final bool isBottomSheetOpened;
-  BottomSheetStarted(this.isBottomSheetOpened);
+  HomeStarted(this.isBottomSheetOpened);
 }
 
-class HomeClose extends HomeEvent {}
+class BottomSheet extends HomeEvent {
+  final bool isBottomSheetOpened;
+  BottomSheet(this.isBottomSheetOpened);
+}
+
+class HomeClose extends HomeEvent {
+  final bool isBottomSheetOpened;
+  HomeClose(this.isBottomSheetOpened);
+}
+
+class DateBar extends HomeEvent {}

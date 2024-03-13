@@ -7,42 +7,51 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  String? currentMonth;
+  String? currentYear;
+
   HomeBloc() : super(HomeInitial()) {
-    on<HomeEvent>(_onHomeStarted);
+    on<HomeStarted>(_onHomeStarted);
+    on<BottomSheet>(_onBottomSheetState);
     on<HomeClose>(_onResetState);
+    on<DateBar>(_onDateBarChanged);
   }
+
   SolidController solidController = SolidController();
   final GlobalKey<ScaffoldState> key = GlobalKey();
   final GlobalKey<CalendarState> calendarKey = GlobalKey();
-  String? currentMonth = '';
 
-  void _onHomeStarted(HomeEvent event, Emitter<HomeState> emit) {
+  void _onHomeStarted(HomeStarted event, Emitter<HomeState> emit) {
+    currentMonth = calendarKey.currentState?.getCurrentMonthString() ?? '';
+    currentYear = calendarKey.currentState?.getCurrentYearString() ?? '';
+
     emit(HomeInitial());
-    _onBottomSheetStarted(event, emit);
+    emit(DateBarUpdated(
+      currentMonth ?? '',
+      currentYear ?? '',
+    ));
   }
 
-  void _onBottomSheetStarted(HomeEvent event, Emitter<HomeState> emit) {
-    if (event is BottomSheetStarted) {
-      if (event.isBottomSheetOpened) {
-        emit(BottomSheetOpened());
-      } else {
-        emit(BottomSheetClosed());
-      }
+  void _onBottomSheetState(BottomSheet event, Emitter<HomeState> emit) {
+    if (event.isBottomSheetOpened) {
+      emit(BottomSheetOpened());
+    } else {
+      emit(BottomSheetClosed());
     }
   }
 
   void handleBottomSheetOpened(BuildContext context) {
-    context.read<HomeBloc>().add(BottomSheetStarted(true));
+    context.read<HomeBloc>().add(BottomSheet(true));
     solidController.show();
   }
 
   void handleBottomSheetClosed(BuildContext context) {
-    context.read<HomeBloc>().add(BottomSheetStarted(false));
+    context.read<HomeBloc>().add(BottomSheet(false));
     solidController.hide();
   }
 
   void resetState(BuildContext context) {
-    context.read<HomeBloc>().add(HomeClose());
+    context.read<HomeBloc>().add(HomeClose(false));
     solidController.hide();
     handleBottomSheetClosed(context);
   }
@@ -51,30 +60,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeReset());
   }
 
-  String getMonthString(String dateString) {
-    List<String> parts = dateString.split(' ');
-
-    // Check if the parts array has at least 3 elements
-    if (parts.length < 3) return 'Invalid format';
-
-    // Get the month string, which is the second element after 'de'
-    String monthString = parts[2].toUpperCase();
-
-    // Remove the comma if present
-    monthString = monthString.replaceAll(',', '');
-
-    return monthString;
-  }
-
-  String getYearString(String dateString) {
-    List<String> parts = dateString.split(' ');
-
-    // Check if the parts array has at least 3 elements
-    if (parts.length < 3) return 'Invalid format';
-
-    // Get the year string, which is the third element
-    String yearString = parts[3];
-
-    return yearString;
+  void _onDateBarChanged(DateBar event, Emitter<HomeState> emit) {
+    currentMonth = calendarKey.currentState?.getCurrentMonthString();
+    currentYear = calendarKey.currentState?.getCurrentYearString();
+    emit(DateBarUpdated(
+      currentMonth ?? '',
+      currentYear ?? '',
+    ));
   }
 }

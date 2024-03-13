@@ -25,41 +25,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<HomeBloc>().add(HomeStarted(false));
   }
 
   @override
   Widget build(BuildContext context) {
     final homeBloc = context.read<HomeBloc>();
 
-    print(homeBloc.calendarKey.currentState?.controller
-            .getCurrentMonth()
-            .toString() ??
-        '');
     return Scaffold(
-      backgroundColor: AppColor.colorWhite,
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: CommonAppbarWithDateBar(
         globalKey: context.read<HomeBloc>().key,
-        year: homeBloc.getYearString(homeBloc
-                .calendarKey.currentState?.controller
-                .getCurrentMonth()
-                .toString() ??
-            ''),
-        month: homeBloc.getMonthString(homeBloc
-                .calendarKey.currentState?.controller
-                .getCurrentMonth()
-                .toString() ??
-            ''),
+        year: homeBloc.currentYear ?? '',
+        month: homeBloc.currentMonth ?? '',
         onPressBack: () {
+          context.read<HomeBloc>().add(DateBar());
           homeBloc.calendarKey.currentState!.onPressBackFunction();
         },
         onPressForward: () {
+          context.read<HomeBloc>().add(DateBar());
           homeBloc.calendarKey.currentState!.onPressForwardFunction();
         },
       ),
       bottomSheet: _buidlBottomSheet(context),
       body: CommonCalendar(
-        funtionOnTapDate: (p0) {},
-        currentMonth: context.read<HomeBloc>().currentMonth ?? '',
+        funtionOnTapDate: (p0) {
+          print(p0);
+        },
       ),
     );
   }
@@ -116,6 +108,10 @@ _buidlBottomSheet(BuildContext context) {
                     color: Colors.white, size: 30.sp);
               }
               if (state is HomeReset) {
+                bottomSheetIcon = Icon(Icons.keyboard_arrow_up,
+                    color: Colors.white, size: 30.sp);
+              }
+              if (state is DateBarUpdated) {
                 bottomSheetIcon = Icon(Icons.keyboard_arrow_up,
                     color: Colors.white, size: 30.sp);
               }

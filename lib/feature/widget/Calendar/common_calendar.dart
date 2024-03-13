@@ -8,11 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonCalendar extends StatelessWidget {
-  final String currentMonth;
   final void Function(Date?) funtionOnTapDate;
   const CommonCalendar({
     super.key,
-    required this.currentMonth,
     required this.funtionOnTapDate,
   });
 

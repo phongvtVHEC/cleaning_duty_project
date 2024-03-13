@@ -1,7 +1,9 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
+import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/widget/DateBar/common_date_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
@@ -46,11 +48,15 @@ class CommonAppbarWithDateBar extends StatelessWidget
               ],
             ),
           ),
-          CommonDateBar(
-            month: month,
-            year: year,
-            onPressedBack: onPressBack,
-            onPressedForward: onPressForward,
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return CommonDateBar(
+                month: context.read<HomeBloc>().currentMonth ?? '',
+                year: context.read<HomeBloc>().currentYear ?? '',
+                onPressedBack: onPressBack,
+                onPressedForward: onPressForward,
+              );
+            },
           ),
         ],
       ),

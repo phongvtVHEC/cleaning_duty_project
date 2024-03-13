@@ -93,10 +93,6 @@ class CalendarPageController {
 
   void onChage(int value) => currentPage.sink.add(value);
 
-  Date getCurrentMonth() {
-    return dataCollection.currentMonth!;
-  }
-
   void dispose() {
     subscription.cancel();
 
