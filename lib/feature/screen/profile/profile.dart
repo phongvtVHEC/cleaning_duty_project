@@ -21,8 +21,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileBloc>().add(ProfileStarted());
+    });
     super.initState();
-    context.read<ProfileBloc>().add(ProfileStarted());
   }
 
   @override
@@ -30,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var profileState = context.watch<ProfileBloc>().state;
     if (profileState is GetProfileFail) {
       context.pop();
-      ToastUtil.showErrorMessage("Get profile fail");
+      // ToastUtil.showErrorMessage("Get profile fail");
     }
     if (profileState is UpdateAvatarFail) {
       ToastUtil.showErrorMessage("Update avatar fail");
@@ -116,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 10.w),
+                padding: EdgeInsets.only(right: 15.w, bottom: 5.h),
                 child: const Icon(
                   Icons.camera_alt,
                   color: AppColor.color10275A,
