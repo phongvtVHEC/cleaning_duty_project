@@ -39,11 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
         year: homeBloc.currentYear ?? '',
         month: homeBloc.currentMonth ?? '',
         onPressBack: () {
-          context.read<HomeBloc>().add(DateBar());
+          context.read<HomeBloc>().handleDateBarPreviousUpdated(context);
           homeBloc.calendarKey.currentState!.onPressBackFunction();
         },
         onPressForward: () {
-          context.read<HomeBloc>().add(DateBar());
+          context.read<HomeBloc>().handleDateBarForwardUpdated(context);
           homeBloc.calendarKey.currentState!.onPressForwardFunction();
         },
       ),

@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CommonAppbarWithBackArrow(
         title: 'Profile',
         onPressedBackButton: () {
-          context.read<HomeBloc>().add(HomeEvent());
+          context.read<HomeBloc>().add(HomeClose(false));
           context.pop();
         },
       ),

@@ -10,8 +10,4 @@ final class BottomSheetOpened extends HomeState {}
 
 final class BottomSheetClosed extends HomeState {}
 
-final class DateBarUpdated extends HomeState {
-  final String currentYear;
-  final String currentMonth;
-  DateBarUpdated(this.currentMonth, this.currentYear);
-}
+final class DateBarUpdated extends HomeState {}

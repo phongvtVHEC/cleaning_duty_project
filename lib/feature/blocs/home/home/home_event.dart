@@ -17,4 +17,11 @@ class HomeClose extends HomeEvent {
   HomeClose(this.isBottomSheetOpened);
 }
 
-class DateBar extends HomeEvent {}
+class DateBar extends HomeEvent {
+  final String currentYear;
+  final String currentMonth;
+  DateBar(
+    this.currentYear,
+    this.currentMonth,
+  );
+}

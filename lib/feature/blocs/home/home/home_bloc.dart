@@ -24,12 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _onHomeStarted(HomeStarted event, Emitter<HomeState> emit) {
     currentMonth = calendarKey.currentState?.getCurrentMonthString() ?? '';
     currentYear = calendarKey.currentState?.getCurrentYearString() ?? '';
-
     emit(HomeInitial());
-    emit(DateBarUpdated(
-      currentMonth ?? '',
-      currentYear ?? '',
-    ));
+    emit(DateBarUpdated());
   }
 
   void _onBottomSheetState(BottomSheet event, Emitter<HomeState> emit) {
@@ -61,11 +57,42 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _onDateBarChanged(DateBar event, Emitter<HomeState> emit) {
-    currentMonth = calendarKey.currentState?.getCurrentMonthString();
-    currentYear = calendarKey.currentState?.getCurrentYearString();
-    emit(DateBarUpdated(
-      currentMonth ?? '',
-      currentYear ?? '',
-    ));
+    emit(DateBarUpdated());
+  }
+
+  void handleDateBarForwardUpdated(BuildContext context) {
+    int month = int.parse(currentMonth ?? '');
+    int year = int.parse(currentYear ?? '');
+
+    if (month == 12) {
+      month = 1;
+      year++;
+    } else {
+      month++;
+    }
+
+    currentMonth = month.toString();
+    currentYear = year.toString();
+    context
+        .read<HomeBloc>()
+        .add(DateBar(currentMonth ?? '', currentYear ?? ''));
+  }
+
+  void handleDateBarPreviousUpdated(BuildContext context) {
+    int month = int.parse(currentMonth ?? '');
+    int year = int.parse(currentYear ?? '');
+
+    if (month == 1) {
+      month = 12;
+      year--;
+    } else {
+      month--;
+    }
+
+    currentMonth = month.toString();
+    currentYear = year.toString();
+    context
+        .read<HomeBloc>()
+        .add(DateBar(currentMonth ?? '', currentYear ?? ''));
   }
 }
