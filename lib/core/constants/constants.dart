@@ -18,6 +18,8 @@ class Constants {
   static final String api_update_avatar =
       '$api_base_url/api/users/update-avatar';
   static final String api_update_profile = '$api_base_url/api/users';
+  static final String api_getCleaningDuties =
+      '$api_base_url/api/cleaning-duties';
 
   // Constant String
   static const String access_token = 'access_token';

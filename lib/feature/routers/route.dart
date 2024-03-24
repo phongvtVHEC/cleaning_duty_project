@@ -5,8 +5,10 @@ import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/remote/cleanning_duty/cleanning_duty_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
+import 'package:cleaning_duty_project/feature/data/repository/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/data/repository/profile/profile.dart';
 import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
@@ -65,7 +67,12 @@ class AppRouter {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider<HomeBloc>(
-              create: (context) => HomeBloc(),
+              create: (context) => HomeBloc(
+                CleanningDutyRepositoryImpl(
+                  cleanningDutyNetworkClient:
+                      locator<CleanningDutyNetworkClient>(),
+                ),
+              ),
             ),
             BlocProvider<LogoutBloc>(
               create: (context) => LogoutBloc(

@@ -36,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: CommonAppbarWithDateBar(
         globalKey: context.read<HomeBloc>().key,
-        year: homeBloc.currentYear ?? '',
-        month: homeBloc.currentMonth ?? '',
         onPressBack: () {
           context.read<HomeBloc>().handleDateBarPreviousUpdated(context);
           homeBloc.calendarKey.currentState!.onPressBackFunction();
@@ -49,9 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomSheet: _buidlBottomSheet(context),
       body: CommonCalendar(
-        funtionOnTapDate: (p0) {
-          print(p0);
-        },
+        funtionOnTapDate: (p0) {},
       ),
     );
   }
