@@ -1,11 +1,13 @@
 import 'dart:io';
-
 import 'package:cleaning_duty_project/core/constants/constants.dart';
+import 'package:cleaning_duty_project/feature/data/remote/devices/device_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/repository/devices/devices.dart';
 import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
 import 'package:cleaning_duty_project/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -46,9 +48,17 @@ Future<void> initFirebase() async {
 }
 
 Future<void> initNotification() async {
+  DevicesRepositoryImpl devicesRepositoryImpl = DevicesRepositoryImpl(
+    devicesNetworkClient: locator<DevicesNetworkClient>(),
+  );
   await FirebaseMessaging.instance.requestPermission();
   final fCMToken = await FirebaseMessaging.instance.getToken();
-  print('Token: $fCMToken');
+  var response = await devicesRepositoryImpl.createDevice(fCMToken ?? '');
+  if (response == 200) {
+    if (kDebugMode) {
+      print('Saving Device Token Success: $fCMToken');
+    }
+  }
 }
 
 class MainApp extends StatelessWidget {

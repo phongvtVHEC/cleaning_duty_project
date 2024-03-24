@@ -22,6 +22,7 @@ class Constants {
       '$api_base_url/api/cleaning-duties';
   static final String api_quickAssignDuties =
       '$api_base_url/api/cleaning-duties/arrange';
+  static final String api_create_devices_token = '$api_base_url/api/devices';
 
   // Constant String
   static const String access_token = 'access_token';
