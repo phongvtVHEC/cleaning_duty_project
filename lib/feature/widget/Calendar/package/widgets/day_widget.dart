@@ -34,8 +34,7 @@ class DayWidget extends StatelessWidget {
     final bool isCurrentMonth = day!.date!.month == date!.month;
     final bool isCurrentYear = day!.date!.year == date!.year;
     // Default avatar
-    String avatarUrl =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwdRIXfjIoZZgo4WdJ4nvjWbYIP0Oe6zGDn10RveeYkg&s";
+    String avatarUrl = "";
     for (var element in cleaningDutyList) {
       if (DateTime.tryParse(element.assignDate ?? '')!.day == day!.value &&
           DateTime.tryParse(element.assignDate ?? '')!.month == date!.month) {
@@ -79,17 +78,20 @@ class DayWidget extends StatelessWidget {
               width: 20.sp,
               height: 20.sp,
               child: Center(
-                child: Container(
-                  decoration: ShapeDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(avatarUrl),
-                      fit: BoxFit.cover,
-                    ),
-                    shape: const OvalBorder(
-                      side: BorderSide(width: 1, color: AppColor.colorGrey),
-                    ),
-                  ),
-                ),
+                child: avatarUrl.isNotEmpty
+                    ? Container(
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(avatarUrl),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: const OvalBorder(
+                            side:
+                                BorderSide(width: 1, color: AppColor.colorGrey),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ),
             ),
           ),

@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/core/utils/toast_util.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
+import 'package:cleaning_duty_project/feature/data/db/local_client.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/smoothness.dart';
 import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solidBottomSheet.dart';
@@ -32,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeBloc = context.read<HomeBloc>();
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: CommonAppbarWithDateBar(
@@ -60,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 _buidlBottomSheet(BuildContext context) {
+  LocalClientImpl localClientImpl = LocalClientImpl();
   var logoutState = context.watch<LogoutBloc>().state;
   if (logoutState is LogoutSuccess) {
     ToastUtil.showSuccessMessage('Logout success!');
@@ -144,7 +147,7 @@ _buidlBottomSheet(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildIconButton(
                     OMIcons.person,
@@ -155,49 +158,61 @@ _buidlBottomSheet(BuildContext context) {
                       context.push(ScreenRoute.profileScreen);
                     },
                   ),
-                  _buildIconButton(
-                    OMIcons.personAdd,
-                    AppColor.color219653,
-                    'Add Duty',
-                    () {
-                      context.read<HomeBloc>().resetState(context);
-                      context.push(ScreenRoute.cleanningDutyScreen);
-                    },
-                  ),
-                  _buildIconButton(
-                    OMIcons.assignmentInd,
-                    AppColor.color9B51E0,
-                    'Quick Add ',
-                    () {
-                      PanaraConfirmDialog.showAnimatedGrow(context,
-                          message:
-                              'Tự Động sắp lịch trực nhật cho tháng hiện tại',
-                          confirmButtonText: 'Ok',
-                          cancelButtonText: 'Hủy', onTapConfirm: () {
-                        context.pop();
+                  if (localClientImpl.readData('currentUser') != "admin")
+                    _buildIconButton(
+                      OMIcons.personAdd,
+                      AppColor.color219653,
+                      'Add Duty',
+                      () {
                         context.read<HomeBloc>().resetState(context);
-                        Future.delayed(const Duration(milliseconds: 1000), () {
-                          PanaraInfoDialog.show(
-                            context,
-                            title: "Thành Công",
-                            message: "Đã sắp lịch trực nhật cho tháng hiện tại",
-                            buttonText: "Ok",
-                            onTapDismiss: () {
-                              Navigator.pop(context);
-                            },
-                            panaraDialogType: PanaraDialogType.success,
-                          );
-                        });
-                      }, onTapCancel: () {
-                        context.pop();
-                      }, panaraDialogType: PanaraDialogType.normal);
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                        context.push(ScreenRoute.cleanningDutyScreen);
+                      },
+                    ),
+                  if (localClientImpl.readData('currentUser') != "admin")
+                    _buildIconButton(
+                      OMIcons.assignmentInd,
+                      AppColor.color9B51E0,
+                      'Quick Add ',
+                      () {
+                        PanaraConfirmDialog.showAnimatedGrow(context,
+                            message:
+                                'Tự Động sắp lịch trực nhật cho tháng hiện tại',
+                            confirmButtonText: 'Ok',
+                            cancelButtonText: 'Hủy', onTapConfirm: () async {
+                          context.pop();
+                          context.read<HomeBloc>().resetState(context);
+
+                          var response = await context
+                              .read<HomeBloc>()
+                              .handleQuickAssignDuties();
+                          if (response == 200) {
+                            PanaraInfoDialog.show(
+                              context,
+                              title: "Thành Công",
+                              message:
+                                  "Đã sắp lịch trực nhật cho tháng hiện tại",
+                              buttonText: "Ok",
+                              onTapDismiss: () {
+                                context
+                                    .read<HomeBloc>()
+                                    .add(HomeStarted(false));
+                                Navigator.pop(context);
+                              },
+                              panaraDialogType: PanaraDialogType.success,
+                            );
+                          } else {
+                            PanaraInfoDialog.show(context,
+                                message: "Có lỗi trong quá trình thực hiện !",
+                                title: "Thất bại",
+                                buttonText: "Ok",
+                                onTapDismiss: () {},
+                                panaraDialogType: PanaraDialogType.error);
+                          }
+                        }, onTapCancel: () {
+                          context.pop();
+                        }, panaraDialogType: PanaraDialogType.normal);
+                      },
+                    ),
                   _buildIconButton(
                     Icons.logout_outlined,
                     AppColor.colorEB5757,
@@ -207,7 +222,7 @@ _buidlBottomSheet(BuildContext context) {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

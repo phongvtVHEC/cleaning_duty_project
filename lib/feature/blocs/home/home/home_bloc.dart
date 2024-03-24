@@ -132,4 +132,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     cleaningDutyList = response.cleaningDutiesResponse;
     calendarKey.currentState?.updateCleanDutyList(cleaningDutyList ?? []);
   }
+
+  Future<int> handleQuickAssignDuties() async {
+    var response = await cleanningDutyRepositoryImpl.quickAssignDuties();
+    return response;
+  }
 }
