@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/feature/data/repository/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solidController.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/calendar_page.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   String? currentMonth;
   String? currentYear;
 
-  HomeBloc() : super(HomeInitial()) {
+  HomeBloc(this.cleanningDutyRepositoryImpl) : super(HomeInitial()) {
     on<HomeStarted>(_onHomeStarted);
     on<BottomSheet>(_onBottomSheetState);
     on<HomeClose>(_onResetState);
@@ -20,10 +21,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   SolidController solidController = SolidController();
   final GlobalKey<ScaffoldState> key = GlobalKey();
   final GlobalKey<CalendarState> calendarKey = GlobalKey();
+  final CleanningDutyRepositoryImpl cleanningDutyRepositoryImpl;
 
-  void _onHomeStarted(HomeStarted event, Emitter<HomeState> emit) {
-    currentMonth = calendarKey.currentState?.getCurrentMonthString() ?? '';
-    currentYear = calendarKey.currentState?.getCurrentYearString() ?? '';
+  void _onHomeStarted(HomeStarted event, Emitter<HomeState> emit) async {
+    currentMonth =
+        await calendarKey.currentState?.getCurrentMonthString() ?? '';
+    currentYear = await calendarKey.currentState?.getCurrentYearString() ?? '';
+    handleGetCleaningDuty();
     emit(HomeInitial());
     emit(DateBarUpdated());
   }
@@ -56,7 +60,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeReset());
   }
 
-  void _onDateBarChanged(DateBar event, Emitter<HomeState> emit) {
+  void _onDateBarChanged(DateBar event, Emitter<HomeState> emit) async {
     emit(DateBarUpdated());
   }
 
@@ -94,5 +98,34 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     context
         .read<HomeBloc>()
         .add(DateBar(currentMonth ?? '', currentYear ?? ''));
+  }
+
+  String convertMonthFromNumberToString(String month) {
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    int index = int.tryParse(month) ?? 1;
+    if (index >= 1 && index <= 12) {
+      return months[index - 1];
+    } else {
+      return 'January';
+    }
+  }
+
+  Future<void> handleGetCleaningDuty() async {
+    var response = await cleanningDutyRepositoryImpl.getCleanningDuty(
+        currentYear ?? '', currentMonth ?? '');
   }
 }
