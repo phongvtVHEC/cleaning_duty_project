@@ -1,3 +1,4 @@
+import 'package:cleaning_duty_project/feature/data/entities/response/cleanning_duty/cleanning_duties_response.dart';
 import 'package:cleaning_duty_project/feature/data/repository/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solidController.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/calendar_page.dart';
@@ -10,6 +11,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   String? currentMonth;
   String? currentYear;
+  List<CleaningDutiesResponse>? cleaningDutyList = [];
 
   HomeBloc(this.cleanningDutyRepositoryImpl) : super(HomeInitial()) {
     on<HomeStarted>(_onHomeStarted);
@@ -27,7 +29,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     currentMonth =
         await calendarKey.currentState?.getCurrentMonthString() ?? '';
     currentYear = await calendarKey.currentState?.getCurrentYearString() ?? '';
-    handleGetCleaningDuty();
+    await handleGetCleaningDuty();
     emit(HomeInitial());
     emit(DateBarUpdated());
   }
@@ -127,5 +129,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> handleGetCleaningDuty() async {
     var response = await cleanningDutyRepositoryImpl.getCleanningDuty(
         currentYear ?? '', currentMonth ?? '');
+    cleaningDutyList = response.cleaningDutiesResponse;
+    calendarKey.currentState?.updateCleanDutyList(cleaningDutyList ?? []);
   }
 }

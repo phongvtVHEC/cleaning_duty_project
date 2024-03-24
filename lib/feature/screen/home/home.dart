@@ -46,8 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       bottomSheet: _buidlBottomSheet(context),
-      body: CommonCalendar(
-        funtionOnTapDate: (p0) {},
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return CommonCalendar(
+            cleaningDutyList: homeBloc.cleaningDutyList ?? [],
+            funtionOnTapDate: (p0) {},
+          );
+        },
       ),
     );
   }

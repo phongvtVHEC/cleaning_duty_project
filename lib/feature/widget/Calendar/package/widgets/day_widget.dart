@@ -1,4 +1,5 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
+import 'package:cleaning_duty_project/feature/data/entities/response/cleanning_duty/cleanning_duties_response.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ class DayWidget extends StatelessWidget {
   final Function? onTap;
   final bool isSelected;
   final double radius;
+  final List<CleaningDutiesResponse> cleaningDutyList;
 
   const DayWidget(
       {Key? key,
@@ -22,7 +24,8 @@ class DayWidget extends StatelessWidget {
       this.isSelected = false,
       this.radius = 20,
       this.backgroundColor,
-      this.date})
+      this.date,
+      required this.cleaningDutyList})
       : super(key: key);
 
   @override
@@ -30,7 +33,15 @@ class DayWidget extends StatelessWidget {
     final bool isCurrentDay = day!.value == date!.day;
     final bool isCurrentMonth = day!.date!.month == date!.month;
     final bool isCurrentYear = day!.date!.year == date!.year;
-
+    // Default avatar
+    String avatarUrl =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwdRIXfjIoZZgo4WdJ4nvjWbYIP0Oe6zGDn10RveeYkg&s";
+    for (var element in cleaningDutyList) {
+      if (DateTime.tryParse(element.assignDate ?? '')!.day == day!.value &&
+          DateTime.tryParse(element.assignDate ?? '')!.month == date!.month) {
+        avatarUrl = element.cleaner!.avatarUrl ?? "";
+      }
+    }
     return GestureDetector(
       onTap: day!.value == 0 ? null : onTap as void Function()?,
       child: Stack(
@@ -69,13 +80,12 @@ class DayWidget extends StatelessWidget {
               height: 20.sp,
               child: Center(
                 child: Container(
-                  decoration: const ShapeDecoration(
+                  decoration: ShapeDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                          "https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"),
+                      image: NetworkImage(avatarUrl),
                       fit: BoxFit.cover,
                     ),
-                    shape: OvalBorder(
+                    shape: const OvalBorder(
                       side: BorderSide(width: 1, color: AppColor.colorGrey),
                     ),
                   ),

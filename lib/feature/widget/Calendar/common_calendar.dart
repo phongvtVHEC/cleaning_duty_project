@@ -1,6 +1,7 @@
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
+import 'package:cleaning_duty_project/feature/data/entities/response/cleanning_duty/cleanning_duties_response.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/calendar_page.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonCalendar extends StatelessWidget {
   final void Function(Date?) funtionOnTapDate;
+  final List<CleaningDutiesResponse> cleaningDutyList;
   const CommonCalendar({
     super.key,
     required this.funtionOnTapDate,
+    required this.cleaningDutyList,
   });
 
   @override
   Widget build(BuildContext context) {
     return Calendar(
+      cleaningDutyList: cleaningDutyList,
       key: context.read<HomeBloc>().calendarKey,
       disable: false,
       initialDate: DateTime.now(),
