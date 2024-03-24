@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496404340280",
+    "project_id": "cleaning-duty-project",
+    "storage_bucket": "cleaning-duty-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496404340280:android:8c76f9ffc3c78fe89810cd",
+        "android_client_info": {
+          "package_name": "com.app.cleaning_duty_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5KPuiUZJnJiSTyBYKE0uMyUJqaqrAMRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

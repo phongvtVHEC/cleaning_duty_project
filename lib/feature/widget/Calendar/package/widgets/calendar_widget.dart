@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables, curly_braces_in_flow_control_structures
 
+import 'package:cleaning_duty_project/feature/data/entities/response/cleanning_duty/cleanning_duties_response.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/date.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/models/day.dart';
 import 'package:cleaning_duty_project/feature/widget/Calendar/package/widgets/day_widget.dart';
@@ -21,6 +22,7 @@ class CalendarWidget extends StatefulWidget {
   final Widget? next;
   final bool? weekendOpacityEnable;
   final double? weekendOpacity;
+  final List<CleaningDutiesResponse> cleaningDutyList;
   const CalendarWidget(
       {Key? key,
       this.activeColor,
@@ -35,7 +37,8 @@ class CalendarWidget extends StatefulWidget {
       this.titleStyle,
       this.selectedStyle,
       this.weekendOpacityEnable,
-      this.weekendOpacity})
+      this.weekendOpacity,
+      required this.cleaningDutyList})
       : super(key: key);
 
   @override
@@ -75,6 +78,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   .map((week) => TableRow(
                       children: week
                           .map((day) => DayWidget(
+                                cleaningDutyList: widget.cleaningDutyList,
                                 date: day.dateTime,
                                 day: day,
                                 isSelected: daySelected == day,
@@ -83,9 +87,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                     : widget.weekendOpacityEnable! &&
                                             day.isWeekend
                                         ? widget.textStyleDays!.copyWith(
-                                            // color: widget.textStyleDays!.color!
-                                            //     .withOpacity(
-                                            //         widget.weekendOpacity!))
                                             color: Colors.red,
                                           )
                                         : widget.textStyleDays,

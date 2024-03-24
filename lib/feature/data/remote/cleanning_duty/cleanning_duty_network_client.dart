@@ -15,4 +15,12 @@ class CleanningDutyNetworkClient {
     );
     return CleanningDutyResponse.fromJson(response.data);
   }
+
+  Future quickAssignDuties() async {
+    final response = await networkClient.invoke(
+      Constants.api_quickAssignDuties,
+      RequestType.post,
+    );
+    return response.statusCode;
+  }
 }

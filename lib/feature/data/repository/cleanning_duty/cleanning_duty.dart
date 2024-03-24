@@ -3,6 +3,7 @@ import 'package:cleaning_duty_project/feature/data/remote/cleanning_duty/cleanni
 
 abstract class ICleanningDutyRepository {
   Future<CleanningDutyResponse> getCleanningDuty(String year, String month);
+  Future quickAssignDuties();
 }
 
 class CleanningDutyRepositoryImpl extends ICleanningDutyRepository {
@@ -15,6 +16,12 @@ class CleanningDutyRepositoryImpl extends ICleanningDutyRepository {
       String year, String month) async {
     var response =
         await cleanningDutyNetworkClient.getCleaningDuties(year, month);
+    return response;
+  }
+
+  @override
+  Future quickAssignDuties() async {
+    var response = await cleanningDutyNetworkClient.quickAssignDuties();
     return response;
   }
 }
