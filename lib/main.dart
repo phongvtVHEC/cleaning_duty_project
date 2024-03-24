@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/route.dart';
+import 'package:cleaning_duty_project/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -13,6 +18,10 @@ void main() async {
   await dotenv.load(fileName: ".env");
   // Make sure that the FlutterBinding is initialized
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  initFirebase();
   // Show the splash screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // Run the app
@@ -20,6 +29,26 @@ void main() async {
   // Remove the splash screen after 1 second
   await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
+}
+
+Future<void> initFirebase() async {
+  if (Platform.isIOS) {
+    // Handle iOS specific initialization, including obtaining APNS token
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    await FirebaseMessaging.instance.requestPermission();
+    await FirebaseMessaging.instance.getAPNSToken();
+  } else {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  }
+  initNotification();
+}
+
+Future<void> initNotification() async {
+  await FirebaseMessaging.instance.requestPermission();
+  final fCMToken = await FirebaseMessaging.instance.getToken();
+  print('Token: $fCMToken');
 }
 
 class MainApp extends StatelessWidget {
