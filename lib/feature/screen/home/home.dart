@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:cleaning_duty_project/core/colors/app_color.dart';
 import 'package:cleaning_duty_project/core/constants/constants.dart';
 import 'package:cleaning_duty_project/core/utils/toast_util.dart';
@@ -26,10 +25,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  LocalClientImpl localClientImpl = LocalClientImpl();
+  bool isAdmin = false;
   @override
   void initState() {
-    super.initState();
     context.read<HomeBloc>().add(HomeStarted(false));
+    isAdmin = localClientImpl.readData('currentUser')['isAdmin'];
+    super.initState();
   }
 
   @override
@@ -48,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           homeBloc.calendarKey.currentState!.onPressForwardFunction();
         },
       ),
-      bottomSheet: _buidlBottomSheet(context),
+      bottomSheet: _buidlBottomSheet(context, isAdmin),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return CommonCalendar(
@@ -61,8 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-_buidlBottomSheet(BuildContext context) {
-  LocalClientImpl localClientImpl = LocalClientImpl();
+_buidlBottomSheet(BuildContext context, bool isAdmin) {
   var logoutState = context.watch<LogoutBloc>().state;
   if (logoutState is LogoutSuccess) {
     ToastUtil.showSuccessMessage('Logout success!');
@@ -158,7 +159,7 @@ _buidlBottomSheet(BuildContext context) {
                       context.push(ScreenRoute.profileScreen);
                     },
                   ),
-                  if (localClientImpl.readData('currentUser') != "admin")
+                  if (isAdmin)
                     _buildIconButton(
                       OMIcons.personAdd,
                       AppColor.color219653,
@@ -168,7 +169,7 @@ _buidlBottomSheet(BuildContext context) {
                         context.push(ScreenRoute.cleanningDutyScreen);
                       },
                     ),
-                  if (localClientImpl.readData('currentUser') != "admin")
+                  if (isAdmin)
                     _buildIconButton(
                       OMIcons.assignmentInd,
                       AppColor.color9B51E0,
@@ -176,7 +177,7 @@ _buidlBottomSheet(BuildContext context) {
                       () {
                         PanaraConfirmDialog.showAnimatedGrow(context,
                             message:
-                                'Tự Động sắp lịch trực nhật cho tháng hiện tại',
+                                'Tự động sắp lịch trực nhật cho tháng hiện tại',
                             confirmButtonText: 'Ok',
                             cancelButtonText: 'Hủy', onTapConfirm: () async {
                           context.pop();

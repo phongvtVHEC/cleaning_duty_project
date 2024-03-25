@@ -36,11 +36,11 @@ class DayWidget extends StatelessWidget {
     // Default avatar
     String avatarUrl = "";
     for (var element in cleaningDutyList) {
-      if (DateTime.tryParse(element.assignDate ?? '')!.day == day!.value &&
-          DateTime.tryParse(element.assignDate ?? '')!.month == date!.month) {
+      if (DateTime.tryParse(element.assignDate ?? '')!.day == day!.value) {
         avatarUrl = element.cleaner!.avatarUrl ?? "";
       }
     }
+
     return GestureDetector(
       onTap: day!.value == 0 ? null : onTap as void Function()?,
       child: Stack(

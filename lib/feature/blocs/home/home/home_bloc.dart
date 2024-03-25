@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cleaning_duty_project/feature/data/entities/response/cleanning_duty/cleanning_duties_response.dart';
 import 'package:cleaning_duty_project/feature/data/repository/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/widget/BottomSheetActionBar/package/solidController.dart';
@@ -29,7 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     currentMonth =
         await calendarKey.currentState?.getCurrentMonthString() ?? '';
     currentYear = await calendarKey.currentState?.getCurrentYearString() ?? '';
-    await handleGetCleaningDuty();
+    await handleGetCleaningDuty(currentYear, currentMonth);
     emit(HomeInitial());
     emit(DateBarUpdated());
   }
@@ -66,7 +68,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(DateBarUpdated());
   }
 
-  void handleDateBarForwardUpdated(BuildContext context) {
+  Future<void> handleDateBarForwardUpdated(BuildContext context) async {
     int month = int.parse(currentMonth ?? '');
     int year = int.parse(currentYear ?? '');
 
@@ -79,12 +81,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     currentMonth = month.toString();
     currentYear = year.toString();
+    await handleGetCleaningDuty(currentYear, currentMonth);
     context
         .read<HomeBloc>()
         .add(DateBar(currentMonth ?? '', currentYear ?? ''));
   }
 
-  void handleDateBarPreviousUpdated(BuildContext context) {
+  Future<void> handleDateBarPreviousUpdated(BuildContext context) async {
     int month = int.parse(currentMonth ?? '');
     int year = int.parse(currentYear ?? '');
 
@@ -97,6 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     currentMonth = month.toString();
     currentYear = year.toString();
+    await handleGetCleaningDuty(currentYear, currentMonth);
     context
         .read<HomeBloc>()
         .add(DateBar(currentMonth ?? '', currentYear ?? ''));
@@ -126,9 +130,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> handleGetCleaningDuty() async {
+  Future<void> handleGetCleaningDuty(String? year, String? month) async {
     var response = await cleanningDutyRepositoryImpl.getCleanningDuty(
-        currentYear ?? '', currentMonth ?? '');
+        year ?? '', month ?? '');
     cleaningDutyList = response.cleaningDutiesResponse;
     calendarKey.currentState?.updateCleanDutyList(cleaningDutyList ?? []);
   }

@@ -26,7 +26,6 @@ class Calendar extends StatefulWidget {
   final double? space;
   VoidCallback? onPressedBack;
   VoidCallback? onPressedForward;
-  final List<CleaningDutiesResponse> cleaningDutyList;
 
   Calendar({
     Key? key,
@@ -46,7 +45,6 @@ class Calendar extends StatefulWidget {
     this.initialDate,
     this.onPressedBack,
     this.onPressedForward,
-    required this.cleaningDutyList,
   })  : assert(weekendOpacityEnable == true
             ? textStyleWeekDay!.color != null
             : true),
@@ -62,6 +60,7 @@ class CalendarState extends State<Calendar>
     with SingleTickerProviderStateMixin {
   late CalendarPageController controller;
   late PageController pageController;
+  List<CleaningDutiesResponse> cleaningDutyListState = List.empty();
 
   @override
   void initState() {
@@ -107,8 +106,7 @@ class CalendarState extends State<Calendar>
 
   void updateCleanDutyList(List<CleaningDutiesResponse> cleaningDutyList) {
     setState(() {
-      widget.cleaningDutyList.clear();
-      widget.cleaningDutyList.addAll(cleaningDutyList);
+      cleaningDutyListState = cleaningDutyList;
     });
   }
 
@@ -173,8 +171,6 @@ class CalendarState extends State<Calendar>
                       style: widget.textStyleWeekDay!.copyWith(
                           color: widget.weekendOpacityEnable
                               ? index == 0 || index == 6
-                                  // ? widget.textStyleWeekDay!.color!
-                                  //     .withOpacity(widget.weekendOpacity)
                                   ? Colors.red
                                   : widget.textStyleWeekDay!.color
                               : null),
@@ -196,7 +192,7 @@ class CalendarState extends State<Calendar>
                       onPageChanged: controller.onChage,
                       children: [
                         CalendarWidget(
-                          cleaningDutyList: widget.cleaningDutyList,
+                          cleaningDutyList: cleaningDutyListState,
                           key:
                               Key(controller.dataCollection.previousMonth!.key),
                           date: controller.dataCollection.previousMonth,
@@ -215,7 +211,7 @@ class CalendarState extends State<Calendar>
                           weekendOpacity: widget.weekendOpacity,
                         ),
                         CalendarWidget(
-                          cleaningDutyList: widget.cleaningDutyList,
+                          cleaningDutyList: cleaningDutyListState,
                           key: Key(controller.dataCollection.currentMonth!.key),
                           date: controller.dataCollection.currentMonth,
                           onSelected:
@@ -233,7 +229,7 @@ class CalendarState extends State<Calendar>
                           weekendOpacity: widget.weekendOpacity,
                         ),
                         CalendarWidget(
-                          cleaningDutyList: widget.cleaningDutyList,
+                          cleaningDutyList: cleaningDutyListState,
                           key: Key(controller.dataCollection.nextMonth!.key),
                           date: controller.dataCollection.nextMonth,
                           onSelected:

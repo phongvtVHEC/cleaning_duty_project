@@ -20,7 +20,6 @@ class CommonCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Calendar(
-      cleaningDutyList: cleaningDutyList,
       key: context.read<HomeBloc>().calendarKey,
       disable: false,
       initialDate: DateTime.now(),
