@@ -53,10 +53,16 @@ Future<void> initNotification() async {
   );
   await FirebaseMessaging.instance.requestPermission();
   final fCMToken = await FirebaseMessaging.instance.getToken();
-  var response = await devicesRepositoryImpl.createDevice(fCMToken ?? '');
-  if (response == 200) {
+  try {
+    var response = await devicesRepositoryImpl.createDevice(fCMToken ?? '');
+    if (response == 200) {
+      if (kDebugMode) {
+        print('Saving Device Token Success: $fCMToken');
+      }
+    }
+  } catch (e) {
     if (kDebugMode) {
-      print('Saving Device Token Success: $fCMToken');
+      print('Saving Device Token Failed');
     }
   }
 }

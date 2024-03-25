@@ -154,9 +154,10 @@ _buidlBottomSheet(BuildContext context, bool isAdmin) {
                     OMIcons.person,
                     AppColor.colorE06D06,
                     'Profile',
-                    () {
+                    () async {
                       context.read<HomeBloc>().resetState(context);
-                      context.push(ScreenRoute.profileScreen);
+                      await context.push(ScreenRoute.profileScreen);
+                      context.read<HomeBloc>().add(HomeStarted(false));
                     },
                   ),
                   if (isAdmin)

@@ -1,15 +1,18 @@
 import 'package:cleaning_duty_project/feature/blocs/authenticate/login/bloc/login_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/logout/bloc/logout_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/authenticate/register/bloc/register_bloc.dart';
+import 'package:cleaning_duty_project/feature/blocs/cleanning_duty/bloc/cleanning_duty_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/home/home/home_bloc.dart';
 import 'package:cleaning_duty_project/feature/blocs/profile/bloc/profile_bloc.dart';
 import 'package:cleaning_duty_project/feature/data/db/secure_storage.dart';
 import 'package:cleaning_duty_project/feature/data/remote/authenticate/authenticate_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/cleanning_duty/cleanning_duty_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/remote/user/user_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/repository/authenticate/authenticate.dart';
 import 'package:cleaning_duty_project/feature/data/repository/cleanning_duty/cleanning_duty.dart';
 import 'package:cleaning_duty_project/feature/data/repository/profile/profile.dart';
+import 'package:cleaning_duty_project/feature/data/repository/users/users.dart';
 import 'package:cleaning_duty_project/feature/di/dependency_injection.dart';
 import 'package:cleaning_duty_project/feature/routers/screen_route.dart';
 import 'package:cleaning_duty_project/feature/screen/authenticate/login/login.dart';
@@ -98,8 +101,15 @@ class AppRouter {
         ),
       ),
       GoRoute(
-          path: ScreenRoute.cleanningDutyScreen,
-          builder: (context, state) => const CleanningDuty()),
+        path: ScreenRoute.cleanningDutyScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => CleanningDutyBloc(
+            usersRepositoryImpl: UsersRepositoryImpl(
+                userNetworkClient: locator<UserNetworkClient>()),
+          ),
+          child: const CleanningDuty(),
+        ),
+      ),
     ],
   );
   static GoRouter get router => _router;

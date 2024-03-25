@@ -5,6 +5,7 @@ import 'package:cleaning_duty_project/feature/data/remote/authenticate/authentic
 import 'package:cleaning_duty_project/feature/data/remote/cleanning_duty/cleanning_duty_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/devices/device_network_client.dart';
 import 'package:cleaning_duty_project/feature/data/remote/profile/profile_network_client.dart';
+import 'package:cleaning_duty_project/feature/data/remote/user/user_network_client.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -43,4 +44,7 @@ void setupLocator() {
   locator.registerSingleton<DevicesNetworkClient>(
     DevicesNetworkClient(networkClient: networkClient),
   );
+
+  locator.registerSingleton<UserNetworkClient>(
+      UserNetworkClient(networkClient: networkClient));
 }
