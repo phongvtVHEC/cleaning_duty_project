@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.cleaningDutyProject</string>
+	<string>com.app.cleaningDutyProject</string>
 	<key>PROJECT_ID</key>
 	<string>cleaning-duty-project</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:496404340280:ios:71b6fb9a9a3d41099810cd</string>
+	<string>1:496404340280:ios:f4192594b78187e49810cd</string>
 </dict>
 </plist>
