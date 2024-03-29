@@ -71,8 +71,6 @@ class CalendarState extends State<Calendar>
       widget.initialDate,
     );
 
-    widget.onSelected!(controller.dataCollection.currentMonth);
-
     super.initState();
   }
 

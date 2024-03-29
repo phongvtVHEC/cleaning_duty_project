@@ -55,7 +55,19 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           return CommonCalendar(
             cleaningDutyList: homeBloc.cleaningDutyList ?? [],
-            funtionOnTapDate: (p0) {},
+            funtionOnTapDate: (date) {
+              PanaraConfirmDialog.show(
+                context,
+                message: 'Do you want to add a cleaning duty for this day?',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                onTapConfirm: () {},
+                onTapCancel: () {
+                  context.pop();
+                },
+                panaraDialogType: PanaraDialogType.normal,
+              );
+            },
           );
         },
       ),
@@ -274,10 +286,11 @@ Widget _buildIconButton(
       Positioned(
         bottom: 0,
         child: Text(
+          textAlign: TextAlign.center,
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 11.sp,
+            fontSize: 10.sp,
             fontWeight: FontWeight.w700,
             fontFamily: Constants.app_font_Lato,
           ),
